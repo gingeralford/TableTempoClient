@@ -18,7 +18,8 @@ export interface SignUpSplashState {
     restaurantName: String,
     email: String,
     password: String,
-    uniqueCode: String
+    uniqueCode: String,
+    restaurantId: Number
 }
  
 class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState> {
@@ -29,16 +30,18 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
             restaurantName: "",
             email: "",
             password: "",
-            uniqueCode: ""
+            uniqueCode: "",
+            restaurantId: 0,
          };
     }
 
-    //TODO: figured out what the typing needs to be in parameter
-    //FormEvent<HTMLInputElement>
+    //THIS ALL WORKS BUT IT'S VERY SLOW 
+    //TODO: Figure out parameter typing - don't use ANY
+    // Thought it was FormEvent<HTMLInputElement>
     handleSubmit = (event : any) => {
         event.preventDefault();
         console.log(this.state.restaurantName, this.state.email);
-
+        //CREATES RESTAURANT ENTRY
         fetch(`${APIURL}/restaurant/create`, {
             method: "POST",
             body: JSON.stringify({ restaurant: { 
@@ -53,24 +56,35 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
-                this.props.updateToken(data.sessionToken);
+                // this.props.updateToken(data.sessionToken);
+                this.setState({ uniqueCode: data.restaurant.uniqueCode});
+                this.setState({ restaurantId: data.restaurant.id })
                 console.log('Restaurant Account created!');
             })
-
+            //CREATES STAFF ENTRY IMMEDIATELY AFTER USING SAME EMAIL ETC, BUT WITH RESTAURANT ID AND UNIQUE CODE FROM THE RESPONSE
+            .then((data) => fetch(`${APIURL}/staff/create/${this.state.uniqueCode}`, {
+            method: "POST",
+            body: JSON.stringify({ staff: { 
+                uniqueCode: this.state.uniqueCode,
+                restaurantId: this.state.restaurantId,
+                restaurantName: this.state.restaurantName, 
+                email: this.state.email, 
+                password: this.state.password,
+                active: "true",
+                admin: "true"
+        } }),
+            headers: new Headers({
+                "Content-Type": "application/json",
+            }),
+            }))
+            .then((response) => response.json())
+            .then((data) => {
+                this.props.updateToken(data.sessionToken);
+                console.log('Staff account Created Too!');
+            })
             .catch((err) => console.log(err));
-
     }
-    // .then((data) => fetch(`${APIURL}/staff/create/${this.state.uniqueCode}`, {
-    //     method: "POST",
-    //     body: JSON.stringify({ staff: { 
-    //     restaurantName: this.state.restaurantName, 
-    //     email: this.state.email, 
-    //     password: this.state.password } }),
 
-    // headers: new Headers({
-    //     "Content-Type": "application/json",
-    // }),
-    // }))
 
     render() { 
         return ( 
