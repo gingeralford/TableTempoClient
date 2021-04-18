@@ -1,3 +1,9 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x:'hidden';
+}
+
 .App {
   text-align: center;
 }
@@ -27,6 +33,53 @@
 .App-link {
   color: #61dafb;
 }
+
+#landingGrid {
+  position: relative; 
+  top: 20vh;
+  z-index: 5;
+}
+
+#ipadImg {
+  max-width: 100%;
+  width: 600px;
+  min-width: 320px;
+  object-fit:fill;
+
+}
+
+.salesText {
+  box-sizing: border-box;
+  padding: 20px;
+  margin: auto;
+  width: 100%;
+  max-width: 440px;
+  background-color: #007CBE ;
+  color: white;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.signUpFields {
+  box-sizing: border-box;
+  margin: auto;
+  width: 100%;
+  max-width: 440px;
+  font-size: 1em;
+  margin-top: 3vh;
+  padding: 5px;
+  border: 1px solid #707070;
+  border-radius: 5px;
+}
+#wideBtn {
+  margin: auto;
+  font-size: 1.4em;
+  font-family: 'Abril Fatface';
+  padding: 0px;
+  margin-top: 2vh; 
+}
+
+
 
 @keyframes App-logo-spin {
   from {
