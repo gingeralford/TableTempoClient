@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import SignUpSplash from './components/SignUpSplash';
 import SiteNav from './components/SiteNav';
+import Dashboard from './components/Dashboard';
+import Login from './components/Login'
 import {Route, Switch} from 'react-router-dom';
 
 //MATERIAL-UI
@@ -32,7 +34,14 @@ const customTheme = createMuiTheme({
     body1: { 
       fontFamily: 'Raleway, Arial',
       fontSize: '1em',
-      color: '#FFFFFF' }
+      color: '#FFFFFF' 
+    },
+    body2: {
+      fontFamily: 'Raleway, Arial',
+      fontSize: '.9em',
+      fontWeight: 700,
+      color: '#707070'
+    }
   },
   overrides: {
     MuiButton: {
@@ -40,6 +49,11 @@ const customTheme = createMuiTheme({
         textTransform: 'none',
       },
     },
+    MuiLink: {
+      root: {
+        underline: 'none'
+      }
+    }
   },
 
 });
@@ -49,7 +63,7 @@ interface IProps {
 }
 
 interface IState {
-  sessionToken : String | null
+  sessionToken : string | null
 }
 
 class App extends React.Component<IProps, IState>{
@@ -63,7 +77,8 @@ class App extends React.Component<IProps, IState>{
 updateToken = (newToken: string) => {
   localStorage.setItem("token", newToken);
   this.setState({ sessionToken: newToken});
-  console.log(this.state.sessionToken);
+  // console.log(this.state.sessionToken);
+  console.log('Token updated');
 };
 
 clearToken = () => {
@@ -84,16 +99,25 @@ render(){
   return(
     <div className="App">
       <ThemeProvider theme={customTheme}>
-      <SiteNav />
+      <SiteNav 
+        updateToken={this.updateToken}
+        clearToken={this.clearToken}
+        token={this.state.sessionToken}
+      />
       <Switch>
       <Route exact path="/">
+        {this.state.sessionToken == localStorage.getItem('token') ? <Dashboard /> : 
         <SignUpSplash 
           updateToken={this.updateToken}
           clearToken={this.clearToken}
           token={this.state.sessionToken}
-        />
+        /> }
       </Route>
-      
+      <Route exact path="/login"><Login 
+        updateToken={this.updateToken}
+        clearToken={this.clearToken}
+        token={this.state.sessionToken}
+      /></Route>
       </Switch>
       </ThemeProvider>
     </div>
