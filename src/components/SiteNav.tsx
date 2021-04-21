@@ -1,4 +1,5 @@
 import React from 'react';
+import LoginModal from './LoginModal';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -49,9 +50,14 @@ function ButtonAppBar(props: any) {
             Table Tempo
           </Typography></Link></div>
           {props.token != localStorage.getItem('token') ? 
-          <Link to="/login" style={{textDecoration: 'none'}}>
-          <Button variant="contained" color="secondary" style={{ fontFamily: "Abril Fatface, Times new Roman", fontSize: "1.2em", padding: "4px 8px"}}
-          >Log In</Button></Link> : 
+          // <Link to="/login" style={{textDecoration: 'none'}}>
+          // <Button variant="contained" color="secondary" style={{ fontFamily: "Abril Fatface, Times new Roman", fontSize: "1.2em", padding: "4px 8px"}}
+          // >Log In</Button></Link> : 
+          <LoginModal 
+            updateToken={props.updateToken}
+            clearToken={props.clearToken}
+            token={props.token}
+          /> :
           <Button variant="contained" color="secondary" style={{ fontFamily: "Abril Fatface, Times new Roman", fontSize: "1.2em", padding: "4px 8px"}} onClick={props.clearToken}
           >Log Out</Button>
           }

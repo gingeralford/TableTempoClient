@@ -54,3 +54,17 @@ html, body {
   padding: 0px;
   margin-top: 2vh; 
 }
+
+.loginModal {
+  position: relative;
+  top: 20vh;
+  margin: auto;
+  width: 300px;
+  background-color: #FFD639;
+  border: '2px solid #000';
+  padding: 20px;
+}
+
+.partyCreate {
+  text-align: left;
+}

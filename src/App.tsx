@@ -106,7 +106,7 @@ render(){
       />
       <Switch>
       <Route exact path="/">
-        {this.state.sessionToken == localStorage.getItem('token') ? <Dashboard /> : 
+        {this.state.sessionToken == localStorage.getItem('token') ? <Dashboard token={this.state.sessionToken}/> : 
         <SignUpSplash 
           updateToken={this.updateToken}
           clearToken={this.clearToken}
