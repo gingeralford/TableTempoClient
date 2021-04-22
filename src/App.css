@@ -16,6 +16,11 @@ html, body {
   padding-bottom: 10vh;
 }
 
+#dashboard {
+  position: relative;
+  z-index: 5;
+}
+
 #ipadImg {
   max-width: 100%;
   width: 600px;

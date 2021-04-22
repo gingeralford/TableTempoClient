@@ -17,11 +17,15 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     }
     render() { 
         return ( 
-            <div style={{backgroundColor: '#FFF3C2', position: 'fixed', top: "0px", left: '0px', minHeight: '100vh', width: '100%', }} >
+            <>
+            <div style={{backgroundColor: '#FFF3C2', position: 'fixed', top: "0px", left: '0px', minHeight: '100vh', width: '100%', }} ></div>
+                <div id="dashboard">
                 Hello from Dashboard
                 <PartyCreate token={this.props.token}/>
                 <PartyDisplay />
+                
             </div>
+            </>
          );
     }
 }
