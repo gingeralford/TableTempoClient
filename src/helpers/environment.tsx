@@ -1,4 +1,4 @@
-let APIURL: string = 'http://localhost:3000';
+let APIURL: string = 'http://127.0.0.1:3000';
 
 // switch (window.location.hostname) {
 //     // this is the local host name of your react app
