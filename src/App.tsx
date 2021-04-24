@@ -47,6 +47,7 @@ const customTheme = createMuiTheme({
     MuiButton: {
       root: {
         textTransform: 'none',
+        fontFamily: 'Raleway, Arial'
       },
     },
     MuiLink: {
