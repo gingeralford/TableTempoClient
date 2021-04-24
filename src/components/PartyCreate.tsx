@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 // import TextField from '@material-ui/core/TextField';
 import APIURL from "../helpers/environment";
-import { AnyARecord } from 'node:dns';
+
 // import { tokenToString } from 'typescript';
 var dayjs = require('dayjs');
 
@@ -92,22 +92,22 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
         return obj;
     }
 
-    clearForm = () => {
-        this.setState({
-            name: "",
-            partyNum: 0,
-            telephone: "",
-            over21: false,
-            timeEstimated: dayjs(new Date()),
-            timeSeated: dayjs(new Date()),
-            seated: false,
-            leftUnseated: false,
-            specialNotes: "",
-            staffId: 0,
-            restaurantId: 0,
-            uniqueCode: ""
-        })
-    }
+    // clearForm = () => {
+    //     this.setState({
+    //         name: "",
+    //         partyNum: 0,
+    //         telephone: "",
+    //         over21: false,
+    //         timeEstimated: dayjs(new Date()),
+    //         timeSeated: dayjs(new Date()),
+    //         seated: false,
+    //         leftUnseated: false,
+    //         specialNotes: "",
+    //         staffId: 0,
+    //         restaurantId: 0,
+    //         uniqueCode: ""
+    //     })
+    // }
 
     handleSubmit = () => {
         
@@ -136,7 +136,7 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                 console.log(data);
                 console.log('Party Created!');
                 this.props.fetchParties();
-                this.clearForm();
+                // this.clearForm();
             })
             .catch((err) => console.log(err));
         }
@@ -145,7 +145,8 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
     render() { 
         return ( 
             <div style={{paddingTop: "80px"}}>
-                <Grid container>
+                <div className="partyDisplayBox">
+                <Grid container >
                 <Grid item md={1}></Grid>
                 <Grid item md={10}>
                 <form className="partyCreate" onSubmit={this.handleSubmit}>
@@ -185,17 +186,18 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                     // onChange={(event) => {
                     //     this.setState({ timeSeated: new Date(event.target.value)})
                     // }}
-                    /><br/></label>
+                    /></label><br/>
                     <textarea className="signUpFields"  placeholder="Special Notes"
                     onChange={(event) => {
                         this.setState({ specialNotes: event.target.value})
                     }}
                     /><br/>
-                    <Button variant="contained"  fullWidth={false} color="secondary" id="wideBtn" type="submit" >Done</Button><br/>
+                    <Button variant="contained"  fullWidth={false} color="secondary" id="seatedBtn" type="submit" >Done</Button><br/>
                             </form>
                 </Grid>
                 <Grid item md={1}></Grid>
                 </Grid>
+                </div>
             </div>
          );
     }

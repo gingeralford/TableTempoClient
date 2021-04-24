@@ -1,6 +1,8 @@
 import * as React from 'react';
 import APIURL from "../helpers/environment";
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 var dayjs = require('dayjs');
 
 
@@ -32,8 +34,8 @@ export interface PartyDisplayState {
     over21: boolean,
     timeEstimated: string,
     timeSeated: string | string,
-    seated: false,
-    leftUnseated: false,
+    seated: boolean,
+    leftUnseated: boolean,
     specialNotes: string,
     staffId: number,
     restaurantId: number,
@@ -122,7 +124,8 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
     //TODO: update Iparty to get ALL the Data
     updateParty = (party: IParty) => {
         console.log(`updating ${party.id}`);
-        fetch(`${APIURL}/party/update/${party.id}`, {
+        fetch(`${APIURL}/party/update/${party.id}`, 
+        {
             body: JSON.stringify({ party: { 
                 name: party.name, 
                 partyNum: party.partyNum,
@@ -130,7 +133,7 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                 over21: party.over21,
                 timeEstimated: party.timeEstimated,
                 timeSeated: party.timeSeated,
-                seated: party.seated,
+                seated: this.state.seated,
                 leftUnseated: party.leftUnseated,
                 specialNotes: party.specialNotes,
              } }),
@@ -142,14 +145,62 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
           })
             .then((res) => res.json())
             .then((res) => {
-
                 console.log('Party Updated')
                 this.props.fetchParties();
-                
             })
             .catch((err) => console.log(err));
     }
 
+    //toggles seated true/false
+    seatedUpdate = (party: IParty) => {
+        let seated : boolean = true;
+        party.seated === false ? seated = true : seated = false;
+        fetch(`${APIURL}/party/update/${party.id}`, {
+            body: JSON.stringify({ party: { 
+                seated: seated
+             } }),
+            method: "PUT",
+            headers: new Headers({
+              "Content-Type": "application/json",
+              Authorization: this.removeNulls(localStorage.getItem('token'))
+            }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(` ${party.name} is seated`);
+                this.props.fetchParties();
+            })
+            .catch((err) => console.log(err));
+    }
+
+    //toggles Left Unseated Value
+    leftUpdate = (party: IParty) => {
+        let left : boolean = true;
+        party.leftUnseated === false ? left = true : left = false;
+        fetch(`${APIURL}/party/update/${party.id}`, {
+            body: JSON.stringify({ party: { 
+                leftUnseated: left
+             } }),
+            method: "PUT",
+            headers: new Headers({
+              "Content-Type": "application/json",
+              Authorization: this.removeNulls(localStorage.getItem('token'))
+            }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(` ${party.name} Left`);
+                this.props.fetchParties();
+            })
+            .catch((err) => console.log(err));
+    }
+    
+
+    formatPhoneNumber = (phoneNumberString: string) => {
+        phoneNumberString = phoneNumberString.trim();
+        let newNumber: string = phoneNumberString.slice(2,5)+ '-' +phoneNumberString.slice(6,9)+'-'+phoneNumberString.slice(7,11)
+        return newNumber;
+      }
 
     deleteParty = (party: IParty) => {
         console.log(`deleting ${party.id}`);
@@ -162,7 +213,6 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
           })
             .then((res) => res.json())
             .then((res) => {
-
                 console.log('Party Deleted')
                 this.props.fetchParties();
                 
@@ -173,29 +223,58 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
     //TODO: Try building similar components but with inputs
     render() { 
         return ( 
-            <div>Hello From Party Display
-                {/* {this.displayParties} */}
+            <div style={{ paddingBottom: "30px"}}>
                 <div>{this.props.parties.map((party, index ) => 
                     {   
                     return(
-                        <div key={party.id}>
-                    
-                            <p>{party.name}</p>
-                            <p>{party.partyNum}</p>
-                            <p>over 21? {party.over21 === true ? "yes" : "no"}</p>
-                            <p>{party.telephone}</p>
-                            <p>time arrived: {dayjs(party.timeArrived).format('dddd, MMMM D, YYYY h:mm A')}</p>
-                            <p>time estimated: {dayjs(party.timeEstimated).format('dddd, MMMM D, YYYY h:mm A')}</p>
-                            <p>{party.specialNotes}</p>
-                            
-                            <Button variant="contained"  fullWidth={false} color="secondary" id="wideBtn" >Edit</Button><br/>
-
-                            <Button variant="contained"  fullWidth={false} color="secondary" id="wideBtn" onClick={() => this.deleteParty(party)}>Delete</Button><br/>
-
-                            <hr/>
+                        <div key={party.id} className={party.seated === true || party.leftUnseated === true ? "seatedPartyDisplayBox" : "partyDisplayBox" } >
+                            <b>
+                            <Grid container className="partyDisplayBoxLine1" justify="space-between">
+                                
+                                <Grid item sm={2} >
+                                    <span className={party.seated === true || party.leftUnseated === true ? "seatedTimeBox" : "timeBox"}>{dayjs(party.timeEstimated).format('h:mm a')}</span>
+                                </Grid>
+                                <Grid item sm={3}>
+                                    <span>{party.partyNum} - {party.name}</span>
+                                </Grid>
+                                {/* <Grid item sm={1}>
+                                    <span>{party.partyNum}</span>
+                                </Grid> */}
+                                <Grid item sm={3}>
+                                    <span>{this.formatPhoneNumber(party.telephone)}</span>
+                                </Grid>
+                                <Grid item sm={2}>
+                                    <span>{party.over21 === true ? "over 21" : "under 21"}</span>
+                                </Grid>
+                                <Grid item sm={2}>
+                                    <Button variant="contained"  id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
+                                        this.seatedUpdate(party)}}>
+                                        {party.seated === false ? "Seat" : "UnSeat"}
+                                    </Button>
+                                </Grid>
+                                
+                            </Grid>
+                            <Grid container>
+                                <Grid item sm={6}>
+                                    <span>Notes: <i>{party.specialNotes}</i></span>
+                                </Grid>
+                                <Grid item sm={2}>
+                                    <span>time arrived: {dayjs(party.timeArrived).format('h:mm a')}</span>
+                                </Grid>
+                                <Grid item sm={2}>
+                                    <Button variant="contained"  fullWidth={false}  id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} >Edit</Button>
+                                </Grid>
+                                <Grid item sm={2}>
+                                    <Button variant="contained"  id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
+                                            this.leftUpdate(party)}}>Left
+                                    </Button>
+                                </Grid>
+                                <Grid item sm={2}>
+                                    <Button variant="contained" fullWidth={false}  id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "delete"} onClick={() => this.deleteParty(party)}>Delete</Button><br/>
+                                </Grid>
+                            </Grid></b>
                         </div>
-                    )
-                })}
+                    )})}
                 </div>
             </div>
          );

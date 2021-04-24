@@ -26,7 +26,6 @@ html, body {
   width: 600px;
   min-width: 320px;
   object-fit:fill;
-
 }
 
 .salesText {
@@ -73,3 +72,93 @@ html, body {
 .partyCreate {
   text-align: left;
 }
+
+.partyDisplayBox {
+  background-color: #FFD639;
+  border: 1px #707070 solid;
+  border-radius: 10px;
+  width: 86vw;
+  max-width: 1000px;
+  margin: 10px auto;
+  padding: 12px;
+  align-self: center;
+  font-weight: 700;
+  font-size: 1.2em;
+  text-align:left;
+  color: white;
+}
+
+.seatedPartyDisplayBox {
+  background-color: none;
+  color: #707070 !important;
+  border: 1px #707070 solid;
+  border-radius: 10px;
+  width: 86vw;
+  max-width: 1000px;
+  margin: 10px auto;
+  padding: 12px;
+  align-self: center;
+  font-weight: 700;
+  font-size: 1.2em;
+  text-align:left;
+  color: white;
+}
+
+.partyDisplayBoxLine1 {
+  padding: 6px;
+  line-height: 5vh;
+  justify-content: space-between;
+}
+
+.timeBox {
+  background-color: white;
+  color: #007CBE;
+  padding: 5px;
+  border: solid 1px #707070;
+  border-radius: 5px;
+  text-align:left;
+  align-self: center;
+}
+
+.seatedTimeBox {
+  background-color: none !important;
+  color: #9b7d7d !important;
+  padding: 5px;
+  border: solid 1px #707070;
+  border-radius: 5px;
+  text-align:left;
+  align-self: center;
+}
+
+#orangeBtn {
+  background-color: #FBAF00;
+  color: #FFFFFF;
+  align-self: center;
+  justify-self: end;
+  font-weight: 700;
+  font-size: 1em;
+  padding: 2px 8px;
+}
+#seatedBtn {
+  background-color: #FFF3C2;
+  color: #707070;
+  align-self: center;
+  justify-self: end;
+  font-weight: 700;
+  font-size: 1em;
+  border: 1px solid #707070;
+  padding: 2px 8px;
+}
+
+/* TODO: setup hover colors for buttons */
+#delete {
+  background-color: #9a423b;
+  color: #FFFFFF;
+  align-self: center;
+  justify-self: end;
+  font-weight: 700;
+  font-size: 1em;
+  padding: 2px 8px;
+}
+
+
