@@ -144,7 +144,7 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
 
     render() { 
         return ( 
-            <div style={{paddingTop: "80px"}}>
+            <div >
                 <div className="partyDisplayBox">
                 <Grid container >
                 <Grid item md={1}></Grid>

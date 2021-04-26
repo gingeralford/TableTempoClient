@@ -8,6 +8,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import {Link} from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 export interface SiteNavProps {
   updateToken: Function,
@@ -16,7 +22,7 @@ export interface SiteNavProps {
 }
  
 export interface SiteNavState {
-    
+  isDrawerOpened: boolean,
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,11 +36,58 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+    //below added for drawer menu
+    list: {
+      width: 250,
+    },
+    fullList: {
+      width: 'auto',
+    },
+    sideNav: {
+      marginTop: '-60px',
+      zIndex: 3,
+      marginLeft: '0px',
+      position: 'fixed',
+    },
+    link: {
+      color: 'black',
+      textDecoration: 'none',
+    }
   }),
 );
 
+function LeftDrawer(props: any) {
+  const classes = useStyles();
+  // const { isDrawerOpened } = props.state; 
+  return(
+    <Drawer
+          variant="temporary"
+          open={props.isDrawerOpened}
+          onClose={props.closeDrawer}
+        >
+          <Link to='/about'>
+            <List>
+              <ListItem button key='About Us'>
+                <ListItemIcon>
+                </ListItemIcon>
+                <ListItemText primary='About Us' />
+              </ListItem>
+            </List>
+          </Link>
+          <Link to='/contact' >
+          <List>
+            <ListItem button key='Contact Us'>
+              <ListItemIcon>
+              </ListItemIcon>
+              <ListItemText primary='Contact Us' />
+            </ListItem>
+            </List>
+          </Link>
+        </Drawer>
+  )
+}
 
-//TODO: Can't use any!
+//TODO: can't use any!
 function ButtonAppBar(props: any) {
   const classes = useStyles();
 
@@ -43,7 +96,11 @@ function ButtonAppBar(props: any) {
       <AppBar position="sticky" style={ { backgroundColor: '#FFFFFF'}}>
         <Toolbar className="toolbarItems">
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+            <div id="#sideNav">
+            <MenuIcon onClick={props.toggleDrawerStatus}/>
+            <LeftDrawer toggleDrawerStatus={props.toggleDrawerStatus}
+          closeDrawer={props.closeDrawer}/>
+            </div>
           </IconButton>
           <div>
           <Link to="/" style={{textDecoration: "none"}}><Typography variant="h1" className={classes.title}>
@@ -71,13 +128,36 @@ function ButtonAppBar(props: any) {
 class SiteNav extends React.Component<SiteNavProps, SiteNavState> {
     constructor(props: SiteNavProps) {
         super(props);
-        this.state = {   };
+        this.state = {  
+          isDrawerOpened: false,
+         };
     }
+
+    toggleDrawerStatus = () => {
+      this.setState({
+        isDrawerOpened: true,
+      })
+    }
+    closeDrawer = () => {
+      this.setState({
+        isDrawerOpened: false,
+      })
+    }
+
     
     render() { 
+      
         return ( 
         <div>
-          <ButtonAppBar token={this.props.token} updateToken={this.props.updateToken} clearToken={this.props.clearToken}/>
+          <LeftDrawer toggleDrawerStatus={this.toggleDrawerStatus}
+          closeDrawer={this.closeDrawer} />
+          <ButtonAppBar token={this.props.token} 
+          updateToken={this.props.updateToken} 
+          clearToken={this.props.clearToken}
+          toggleDrawerStatus={this.toggleDrawerStatus}
+          closeDrawer={this.closeDrawer}
+          isDrawerOpened={this.state.isDrawerOpened}
+          />
 
         </div> );
     }
