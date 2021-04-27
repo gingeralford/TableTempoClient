@@ -68,7 +68,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     }
 
     fetchParties = () => {
-        fetch(`${APIURL}/party/today`, {
+        fetch(`${APIURL}/party/todayall`, {
             method: "GET",
             headers: new Headers({
               "Content-Type": "application/json",

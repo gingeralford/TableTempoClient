@@ -26,11 +26,15 @@ export interface PartyDisplayProps {
         timeArrived: string
     }[]
 }
-//TODO: not using yet, may not need
-type PartyPlusLocalVars = Partial<PartyDisplayProps['parties']> & {
+
+//Doesn't work. but especially doesn't work if I try to make vars not optional
+type localVars = {
     isEditing?: boolean;
     isExpanded?: boolean;
 }
+
+//TODO: not using yet, not sure what to do with this.
+type PartyPlusLocalVars =  localVars & PartyDisplayProps['parties'] ;
  
 export interface PartyDisplayState {
     isEditable: boolean,
@@ -47,23 +51,23 @@ export interface PartyDisplayState {
     staffId: number,
     restaurantId: number,
     uniqueCode: string,
-
-    parties: {
-        id: number,
-        name: string,
-        partyNum: number,
-        telephone: string,
-        over21: boolean,
-        timeEstimated: string,
-        timeSeated: string,
-        seated: boolean,
-        leftUnseated: boolean,
-        specialNotes: string,
-        staffId: number,
-        restaurantId: number,
-        uniqueCode: string,
-        timeArrived: string
-    }[]
+    parties: PartyPlusLocalVars,
+    // parties: {
+    //     id: number,
+    //     name: string,
+    //     partyNum: number,
+    //     telephone: string,
+    //     over21: boolean,
+    //     timeEstimated: string,
+    //     timeSeated: string,
+    //     seated: boolean,
+    //     leftUnseated: boolean,
+    //     specialNotes: string,
+    //     staffId: number,
+    //     restaurantId: number,
+    //     uniqueCode: string,
+    //     timeArrived: string
+    // }[]
 }
 
 export interface IParty {
@@ -115,10 +119,17 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                 staffId: 0,
                 restaurantId: 0,
                 uniqueCode: "",
-                timeArrived: ""
+                timeArrived: "",
+
             }]
          };
     }
+    // componentDidMount() {
+    //     this.setState({ parties: [false, false, this.props.parties]})
+    //     console.log(this.state.parties[0].isEditing)
+    // }
+
+    //makes nulls undefined for token
     removeNulls =(obj: any) => {
         if (obj === null) {
             return undefined;
@@ -232,9 +243,9 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
     }
     //TODO: Ternary where having editing = true makes it render element as editable inputs vs not??
     //TODO: Try building similar components but with inputs
-    //TODO: Make Left button either not there or disabled after "sat".
     render() { 
-        console.log('rendering');
+        
+        console.log(this.state.parties);
         let time = dayjs();
         return ( 
             <div style={{ paddingBottom: "30px"}}>
