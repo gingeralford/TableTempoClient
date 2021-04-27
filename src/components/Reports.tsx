@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export interface ReportsProps {
-    
+    token: string | null
 }
  
 export interface ReportsState {
@@ -15,9 +15,12 @@ class Reports extends React.Component<ReportsProps, ReportsState> {
     }
     render() { 
         return ( 
-        <div>
-            Hello from Reports
-        </div> );
+            <>
+            <div style={{backgroundColor: '#FFF3C2', position: 'fixed', top: "0px", left: '0px', minHeight: '100vh', width: '100%', }} ></div>
+            <div id="admin">
+                Hello from Reports
+            </div>
+            </> );
     }
 }
  

@@ -3,6 +3,7 @@ import APIURL from "../helpers/environment";
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import ArrowDropDownCircleRoundedIcon from '@material-ui/icons/ArrowDropDownCircleRounded';
+import { isPartiallyEmittedExpression } from 'typescript';
 // import Typography from '@material-ui/core/Typography';
 var dayjs = require('dayjs');
 
@@ -27,6 +28,23 @@ export interface PartyDisplayProps {
     }[]
 }
 
+type party = {
+    id: number,
+    name: string,
+    partyNum: number,
+    telephone: string,
+    over21: boolean,
+    timeEstimated: string,
+    timeSeated: string,
+    seated: boolean,
+    leftUnseated: boolean,
+    specialNotes: string,
+    staffId: number,
+    restaurantId: number,
+    uniqueCode: string,
+    timeArrived: string
+}
+
 //Doesn't work. but especially doesn't work if I try to make vars not optional
 type localVars = {
     isEditing?: boolean;
@@ -34,7 +52,7 @@ type localVars = {
 }
 
 //TODO: not using yet, not sure what to do with this.
-type PartyPlusLocalVars =  localVars & PartyDisplayProps['parties'] ;
+type PartyPlusLocalVars =  localVars & party ;
  
 export interface PartyDisplayState {
     isEditable: boolean,
@@ -51,7 +69,7 @@ export interface PartyDisplayState {
     staffId: number,
     restaurantId: number,
     uniqueCode: string,
-    parties: PartyPlusLocalVars,
+    parties: PartyPlusLocalVars[],
     // parties: {
     //     id: number,
     //     name: string,
@@ -90,6 +108,27 @@ export interface IParty {
 class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState> {
     constructor(props: PartyDisplayProps) {
         super(props);
+        const partyPlaceholder = this.props.parties.map((party) => {
+            return {
+                    id: party.id,
+                    name: party.name,
+                    partyNum: party.partyNum,
+                    telephone: party.telephone,
+                    over21: party.over21,
+                    timeEstimated: party.timeEstimated,
+                    timeSeated: party.timeSeated,
+                    seated: party.seated,
+                    leftUnseated: party.leftUnseated,
+                    specialNotes: party.specialNotes,
+                    staffId: party.staffId,
+                    restaurantId: party.restaurantId,
+                    uniqueCode: party.uniqueCode,
+                    timeArrived: party.timeArrived,
+                    isEditing: false,
+                    isExpanded: false
+                }
+        })
+
         this.state = {  
             isEditable: false,
             isExpanded: false,
@@ -105,29 +144,34 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
             staffId: 0,
             restaurantId: 0,
             uniqueCode: "",
-            parties: [{
-                id: 0,
-                name: "",
-                partyNum: 0,
-                telephone: "",
-                over21: false,
-                timeEstimated: "",
-                timeSeated: "",
-                seated: false,
-                leftUnseated: false,
-                specialNotes: "",
-                staffId: 0,
-                restaurantId: 0,
-                uniqueCode: "",
-                timeArrived: "",
-
-            }]
+            parties: [...partyPlaceholder]
          };
     }
-    // componentDidMount() {
-    //     this.setState({ parties: [false, false, this.props.parties]})
-    //     console.log(this.state.parties[0].isEditing)
-    // }
+    componentDidMount() {
+        
+        // const partyPlaceholder = this.props.parties.map((party) => {
+        //     return {
+        //             id: party.id,
+        //             name: party.name,
+        //             partyNum: party.partyNum,
+        //             telephone: party.telephone,
+        //             over21: party.over21,
+        //             timeEstimated: party.timeEstimated,
+        //             timeSeated: party.timeSeated,
+        //             seated: party.seated,
+        //             leftUnseated: party.leftUnseated,
+        //             specialNotes: party.specialNotes,
+        //             staffId: party.staffId,
+        //             restaurantId: party.restaurantId,
+        //             uniqueCode: party.uniqueCode,
+        //             timeArrived: party.timeArrived,
+        //             isEditing: false,
+        //             isExpanded: false
+        //         }
+        // })
+
+        // this.setState({ parties:[...partyPlaceholder]});
+    }
 
     //makes nulls undefined for token
     removeNulls =(obj: any) => {
@@ -244,12 +288,12 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
     //TODO: Ternary where having editing = true makes it render element as editable inputs vs not??
     //TODO: Try building similar components but with inputs
     render() { 
-        
-        console.log(this.state.parties);
+        console.log("props",this.props.parties)
+        console.log("state",this.state.parties);
         let time = dayjs();
         return ( 
             <div style={{ paddingBottom: "30px"}}>
-                <div>{this.props.parties.map((party, index ) => 
+                <div>{this.state.parties.map((party, index ) => 
                     {   
                     return(
                         // Checks current time and seated/left status and applies different css rules for each scenario
@@ -257,6 +301,8 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                         {party.seated === true || party.leftUnseated === true ? "partyDisplayBox seatedPartyDisplayBox" : dayjs(party.timeEstimated, 'h:mm a') <= time ? "partyDisplayBox overduePartyDisplayBox" : "partyDisplayBox"} >
                             <b>
                             {/* First Line of Box */}
+
+
                             <Grid container className="partyDisplayBoxLine1" style={{justifyContent: "space-between"}}>
                                 <Grid item sm={2} >
                                     <span className={party.seated === true || party.leftUnseated === true ? "timeBox seatedTimeBox" : dayjs(party.timeEstimated, 'h:mm a') <= time ? "timeBox overdueTimeBox":"timeBox"}>{dayjs(party.timeEstimated).format('h:mm a')}</span>

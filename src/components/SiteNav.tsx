@@ -14,6 +14,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import LineStyleIcon from '@material-ui/icons/LineStyle';
 
 export interface SiteNavProps {
   updateToken: Function,
@@ -52,6 +55,13 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       color: 'black',
       textDecoration: 'none',
+    },
+    paper: {
+      background: 'white',
+      color: '#707070',
+      textDecoration: 'none',
+      textTransform: 'none',
+      fontFamily: 'Raleway, Arial',
     }
   }),
 );
@@ -63,33 +73,46 @@ interface ILeftDrawer {
 }
 
 function LeftDrawer(props:ILeftDrawer) {
-  // const classes = useStyles();
+  const classes = useStyles();
+  //need to make my own classes class for this item
   // const { isDrawerOpened } = props.state; 
   return(
-    <div id="sideNav">
+    <div id="drawer">
     <Drawer
           variant="temporary"
           open={props.isDrawerOpened}
           onClose={() => {props.closeDrawer()}}
-        >
-          <Link to='/about'>
+          classes={classes}
+          >
+          <div id="drawerInside">
+          <Link to='/admin' className="sidebarLinks" >
             <List>
-              <ListItem button key='About Us'>
-                <ListItemIcon>
+              <ListItem button key='Admin'  >
+                <ListItemIcon><SupervisorAccountIcon color="primary"/>
                 </ListItemIcon>
-                <ListItemText primary='About Us' />
+                <ListItemText primary={<Typography variant="h2">Admin</Typography>} className="sidebarLinks" />
               </ListItem>
             </List>
           </Link>
-          <Link to='/contact' >
+          <Link to='/reports' className="sidebarLinks">
           <List>
-            <ListItem button key='Contact Us'>
-              <ListItemIcon>
+            <ListItem button key='Reports'>
+              <ListItemIcon><AssessmentIcon color="primary"/>
               </ListItemIcon>
-              <ListItemText primary='Contact Us' />
+              <ListItemText primary={<Typography variant="body2">Reports</Typography>} />
             </ListItem>
             </List>
           </Link>
+          <Link to='/' className="sidebarLinks">
+          <List>
+            <ListItem button key='Dashboard'>
+              <ListItemIcon><LineStyleIcon color="primary"/>
+              </ListItemIcon>
+              <ListItemText primary={<Typography variant="body2">Dashboard</Typography>} />
+            </ListItem>
+            </List>
+          </Link>
+          </div>
         </Drawer>
         </div>
   )
@@ -110,9 +133,9 @@ function ButtonAppBar(props: IButtonAppBar) {
     <div className={classes.root}>
       <AppBar position="sticky" style={ { backgroundColor: '#FFFFFF'}}>
         <Toolbar className="toolbarItems">
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => {props.toggleDrawerStatus()}}>
             <div>
-            <MenuIcon onClick={() => {props.toggleDrawerStatus()}}/>
+            <MenuIcon />
             {/* Has to be direct call, not fat arrow function */}
             </div>
           </IconButton>
@@ -121,9 +144,6 @@ function ButtonAppBar(props: IButtonAppBar) {
             Table Tempo
           </Typography></Link></div>
           {props.token != localStorage.getItem('token') ? 
-          // <Link to="/login" style={{textDecoration: 'none'}}>
-          // <Button variant="contained" color="secondary" style={{ fontFamily: "Abril Fatface, Times new Roman", fontSize: "1.2em", padding: "4px 8px"}}
-          // >Log In</Button></Link> : 
           <LoginModal 
             updateToken={props.updateToken}
             clearToken={props.clearToken}

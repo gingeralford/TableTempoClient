@@ -5,6 +5,8 @@ import SiteNav from './components/SiteNav';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login'
 import {Route, Switch} from 'react-router-dom';
+import Admin from './components/Admin';
+import Reports from './components/Reports';
 
 //MATERIAL-UI
 import {
@@ -31,6 +33,11 @@ const customTheme = createMuiTheme({
       fontSize: '2em',
       color: '#707070'
     },
+    h2: {
+      fontFamily: 'Abril Fatface',
+      fontSize: '1.2em',
+      color: '#007CBE'
+    },
     body1: { 
       fontFamily: 'Raleway, Arial',
       fontSize: '1em',
@@ -52,12 +59,20 @@ const customTheme = createMuiTheme({
     },
     MuiLink: {
       root: {
-        underline: 'none'
+        underline: 'none',
+        textTransform: 'none',
+        color: '#707070'
       }
+    },
+    MuiListItemText: {
+      root: {
+      color: "#707070"
+      }
+    }
     }
   },
 
-});
+);
 
 interface IProps {
   
@@ -119,27 +134,17 @@ render(){
         clearToken={this.clearToken}
         token={this.state.sessionToken}
       /></Route>
+      <Route exact path="/admin"><Admin 
+        token={this.state.sessionToken}
+      /></Route>
+      <Route exact path="/reports"><Reports 
+        token={this.state.sessionToken}
+      /></Route>
       </Switch>
       </ThemeProvider>
     </div>
   )
 }
 }
-
-// const App: React.FunctionComponent = () => {
-//   return (
-    
-//     <div className="App">
-//       <ThemeProvider theme={customTheme}>
-//       <SiteNav />
-//       <Switch>
-//       <Route exact path="/"><SignUpSplash /></Route>
-      
-//       </Switch>
-//       </ThemeProvider>
-//     </div>
-    
-//   );
-// }
 
 export default App;
