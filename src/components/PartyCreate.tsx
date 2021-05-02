@@ -2,8 +2,13 @@ import * as React from 'react';
 // import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
+import TextField from '@material-ui/core/TextField';
 import APIURL from "../helpers/environment";
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import Checkbox from '@material-ui/core/Checkbox';
+import Typography from '@material-ui/core/Typography';
 
 // import { tokenToString } from 'typescript';
 var dayjs = require('dayjs');
@@ -146,59 +151,137 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
         return ( 
             <div >
                 <div className="partyDisplayBox">
-                <Grid container >
-                <Grid item md={1}></Grid>
-                <Grid item md={10}>
                 <form className="partyCreate" onSubmit={this.handleSubmit}>
-                    {/* <TextField className="signUpFields" required variant="filled"  label="Email Address" onChange={(event) => {
-                            this.setState({ email: event.target.value})
-                        }} /><br/>
-                    <TextField className="signUpFields" required variant="filled" label="Password" type="password" onChange={(event) => {
-                        this.setState({ password: event.target.value})
-                    }} /><br/> */}
-                    <input className="signUpFields" type="textfield" placeholder="Party Name" 
+                <Grid container className="partyDisplayBoxLine1" style={{justifyContent: "space-between"}}>
+                <Grid item sm={2}>
+                    <TextField size="small" variant="outlined" className="partyinputs" type="number" label="# Guests"
+                    onChange={(event) => {
+                        this.setState({ partyNum: parseInt(event.target.value)})
+                    }}/>
+                </Grid>
+                <Grid item sm={3}>
+                    <TextField variant="outlined" className="partyinputs" label="Party Name" type="textfield" size="small" 
                     onChange={(event) => {
                         this.setState({ name: event.target.value})
                     }} /><br/>
-                    <input className="signUpFields" type="number" placeholder="Number of Guests"
-                    onChange={(event) => {
-                        this.setState({ partyNum: parseInt(event.target.value)})
-                    }}
-                    /><br/>
-                    <input className="signUpFields" type="textfield" placeholder="telephone #" 
+                </Grid>
+                <Grid item sm={3}>
+                    <TextField size="small" variant="outlined" className="partyinputs" type="textfield" label="telephone #" 
                     onChange={(event) => {
                         this.setState({ telephone: `+1${event.target.value}`})
-                    }}
-                    /><br/><label>Over 21?
-                    <input className="signUpFields" type="checkbox" placeholder="over 21?"
+                    }}/>
+                </Grid>
+                <Grid item sm={2}>
+                <FormControl component="fieldset">
+                <FormGroup aria-label="Over 21" row>
+                <FormControlLabel
+                    control={<Checkbox color="primary" onChange={(event) => {
+                        this.setState({ over21: event.target.checked})
+                    }}/>}
+                    label="Over 21?"
+                    labelPlacement="start"
+                    />
+                </FormGroup>
+                </FormControl>
+                    {/* <label>Over 21?
+                    <input className="partyinputs" type="checkbox" placeholder="over 21?"
                     onChange={(event) => {
                         this.setState({ over21: event.target.checked})
                     }}
-                    /></label><br/>
-                    <label>Estimated Time?<br/>
-                    <input className="signUpFields" type="number" placeholder="Estimated Mins til Seated"
+                    /></label> */}
+                </Grid>
+                <Grid item sm={2}>
+                    <TextField size="small" variant="outlined" className="partyinputs" type="number" label="Est Mins til Seated"
                     onChange={(event) => {
                         this.setState({ timeEstimated: dayjs().add(event.target.value, 'minute')})
                     }}
+                
                     // /></label><br/>
                     // <label>Time Seated?
                     // <input className="signUpFields" type="datetime-local" placeholder="Time Seated"
                     // onChange={(event) => {
                     //     this.setState({ timeSeated: new Date(event.target.value)})
                     // }}
-                    /></label><br/>
-                    <textarea className="signUpFields"  placeholder="Special Notes"
+                    />
+                </Grid>
+                </Grid>
+                <Grid container className="partyDisplayBoxLine1" style={{justifyContent: "space-between", alignItems: "end" }}>
+                    <Grid item sm={8}>
+                    <TextField multiline={true} rows={1} size="small" variant="outlined" className="partyinputs"  label="Notes"
                     onChange={(event) => {
                         this.setState({ specialNotes: event.target.value})
                     }}
-                    /><br/>
-                    <Button variant="contained"  fullWidth={false} color="secondary" id="seatedBtn" type="submit" >Done</Button><br/>
-                            </form>
+                    /></Grid>
+                    <Grid item sm={3}><Typography variant="body1" >Current Time: {dayjs().format('h:mm a')}</Typography>
+                    </Grid>
+                    <Grid item sm={1} >
+                    <div style={{ textAlign: "right"}}>
+                    <Button variant="contained" fullWidth={false} color="secondary" id="orangeBtn" type="submit" >Save</Button></div>
+                    </Grid>
                 </Grid>
-                <Grid item md={1}></Grid>
-                </Grid>
+                </form>
+                
                 </div>
             </div>
+            // <div >
+            //     <div className="partyDisplayBox">
+            //     <Grid container >
+            //     <Grid item md={1}></Grid>
+            //     <Grid item md={10}>
+            //     <form className="partyCreate" onSubmit={this.handleSubmit}>
+            //         {/* <TextField className="signUpFields" required variant="filled"  label="Email Address" onChange={(event) => {
+            //                 this.setState({ email: event.target.value})
+            //             }} /><br/>
+            //         <TextField className="signUpFields" required variant="filled" label="Password" type="password" onChange={(event) => {
+            //             this.setState({ password: event.target.value})
+            //         }} /><br/> */}
+            //         <TextField variant="outlined" className="partyinputs" label="Party Name" type="textfield" size="small" 
+            //         onChange={(event) => {
+            //             this.setState({ name: event.target.value})
+            //         }} /><br/>
+            //         {/* <input className="signUpFields" type="textfield" placeholder="Party Name" 
+            //         onChange={(event) => {
+            //             this.setState({ name: event.target.value})
+            //         }} /><br/> */}
+            //         <input className="partyinputs" type="number" placeholder="Number of Guests"
+            //         onChange={(event) => {
+            //             this.setState({ partyNum: parseInt(event.target.value)})
+            //         }}
+            //         /><br/>
+            //         <input className="partyinputs" type="textfield" placeholder="telephone #" 
+            //         onChange={(event) => {
+            //             this.setState({ telephone: `+1${event.target.value}`})
+            //         }}
+            //         /><br/><label>Over 21?
+            //         <input className="partyinputs" type="checkbox" placeholder="over 21?"
+            //         onChange={(event) => {
+            //             this.setState({ over21: event.target.checked})
+            //         }}
+            //         /></label><br/>
+            //         <label>Estimated Time?<br/>
+            //         <input className="partyinputs" type="number" placeholder="Estimated Mins til Seated"
+            //         onChange={(event) => {
+            //             this.setState({ timeEstimated: dayjs().add(event.target.value, 'minute')})
+            //         }}
+            //         // /></label><br/>
+            //         // <label>Time Seated?
+            //         // <input className="signUpFields" type="datetime-local" placeholder="Time Seated"
+            //         // onChange={(event) => {
+            //         //     this.setState({ timeSeated: new Date(event.target.value)})
+            //         // }}
+            //         /></label><br/>
+            //         <textarea className="partyinputs"  placeholder="Special Notes"
+            //         onChange={(event) => {
+            //             this.setState({ specialNotes: event.target.value})
+            //         }}
+            //         /><br/>
+            //         <Button variant="contained"  fullWidth={false} color="secondary" id="seatedBtn" type="submit" >Done</Button><br/>
+            //                 </form>
+            //     </Grid>
+            //     <Grid item md={1}></Grid>
+            //     </Grid>
+            //     </div>
+            // </div>
          );
     }
 }

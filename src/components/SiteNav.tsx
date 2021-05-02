@@ -33,29 +33,29 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
     },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-    //below added for drawer menu
-    list: {
-      width: 250,
-    },
-    fullList: {
-      width: 'auto',
-    },
-    sideNav: {
-      marginTop: '-60px',
-      zIndex: 3,
-      marginLeft: '0px',
-      position: 'fixed',
-    },
-    link: {
-      color: 'black',
-      textDecoration: 'none',
-    },
+    // menuButton: {
+    //   marginRight: theme.spacing(2),
+    // },
+    // title: {
+    //   flexGrow: 1,
+    // },
+    // //below added for drawer menu
+    // list: {
+    //   width: 250,
+    // },
+    // fullList: {
+    //   width: 'auto',
+    // },
+    // sideNav: {
+    //   marginTop: '-60px',
+    //   zIndex: 3,
+    //   marginLeft: '0px',
+    //   position: 'fixed',
+    // },
+    // link: {
+    //   color: 'black',
+    //   textDecoration: 'none',
+    // },
     paper: {
       background: 'white',
       color: '#707070',
@@ -90,7 +90,7 @@ function LeftDrawer(props:ILeftDrawer) {
               <ListItem button key='Admin'  >
                 <ListItemIcon><SupervisorAccountIcon color="primary"/>
                 </ListItemIcon>
-                <ListItemText primary={<Typography variant="h2">Admin</Typography>} className="sidebarLinks" />
+                <ListItemText primary={<Typography variant="body2">Admin</Typography>} className="sidebarLinks" />
               </ListItem>
             </List>
           </Link>
@@ -133,14 +133,14 @@ function ButtonAppBar(props: IButtonAppBar) {
     <div className={classes.root}>
       <AppBar position="sticky" style={ { backgroundColor: '#FFFFFF'}}>
         <Toolbar className="toolbarItems">
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => {props.toggleDrawerStatus()}}>
+          <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => {props.toggleDrawerStatus()}}>
             <div>
             <MenuIcon />
             {/* Has to be direct call, not fat arrow function */}
             </div>
           </IconButton>
           <div>
-          <Link to="/" style={{textDecoration: "none"}}><Typography variant="h1" className={classes.title}>
+          <Link to="/" style={{textDecoration: "none"}}><Typography variant="h1" >
             Table Tempo
           </Typography></Link></div>
           {props.token != localStorage.getItem('token') ? 

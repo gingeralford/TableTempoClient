@@ -40,7 +40,8 @@ const customTheme = createMuiTheme({
     },
     body1: { 
       fontFamily: 'Raleway, Arial',
-      fontSize: '1em',
+      fontSize: '.9em',
+      fontWeight: 700,
       color: '#FFFFFF' 
     },
     body2: {
@@ -102,7 +103,6 @@ clearToken = () => {
   this.setState({ sessionToken: ""});
   console.log("Token cleared and Logged out");
 };
-
 
 componentDidMount(){
   if (localStorage.getItem("token")) {

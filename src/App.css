@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap');
+
 html, body {
   width: 100%;
   height: 100%;
@@ -51,6 +53,23 @@ html, body {
   border: 1px solid #707070;
   border-radius: 5px;
 }
+
+.partyinputs {
+  margin: auto;
+  font-size: 1em;
+  /* padding: 4px; */
+  /* border: 1px solid #707070; */
+  border-radius: 5px;
+  color: #707070;
+  /* font-family: "Raleway", sans-serif;
+  font-weight: 700; */
+  width: 90%;
+}
+
+.partyNumInput {
+  width: 40px;
+}
+
 #wideBtn {
   margin: auto;
   font-size: 1.4em;
@@ -86,6 +105,7 @@ html, body {
   font-size: 1.2em;
   text-align:left;
   color: white;
+  font-family: 'Raleway', sans-serif;
 }
 
 .seatedPartyDisplayBox {
@@ -94,16 +114,18 @@ html, body {
 }
 
 .overduePartyDisplayBox {
-  background-color:#FBAF00;
+  background-color:#FFD639;
 }
 
 .partyDisplayBoxLine1 {
-  padding: 6px;
-  line-height: 5vh;
+  /* padding: 6px; */
+  line-height: 6vh;
   justify-content: space-between;
+  vertical-align: middle;
 }
 
 .timeBox {
+  box-sizing:border-box;
   background-color: white;
   color: #007CBE;
   padding: 5px;
@@ -111,6 +133,7 @@ html, body {
   border-radius: 5px;
   text-align:left;
   align-self: center;
+  justify-self: center;
 }
 
 .seatedTimeBox {
@@ -178,9 +201,9 @@ html, body {
   color: #707070;
 
 }
-.MuiDrawer-paper {
+/* .MuiDrawer-paper {
   background-color: red;
-}
+} */
 
 #admin {
   position: relative;
