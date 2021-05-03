@@ -85,6 +85,9 @@ function LeftDrawer(props:ILeftDrawer) {
           classes={classes}
           >
           <div id="drawerInside">
+
+          {/* Only shows link to /admin if admin=true */}
+          {localStorage.getItem('admin') ? 
           <Link to='/admin' className="sidebarLinks" >
             <List>
               <ListItem button key='Admin'  >
@@ -94,6 +97,8 @@ function LeftDrawer(props:ILeftDrawer) {
               </ListItem>
             </List>
           </Link>
+          : "" }
+          
           <Link to='/reports' className="sidebarLinks">
           <List>
             <ListItem button key='Reports'>
@@ -172,7 +177,7 @@ class SiteNav extends React.Component<SiteNavProps, SiteNavState> {
       this.setState({
         isDrawerOpened: true,
       })
-      console.log(this.state.isDrawerOpened)
+      // console.log(this.state.isDrawerOpened)
     }
 
     closeDrawer = () => {

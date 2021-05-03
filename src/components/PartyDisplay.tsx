@@ -2,8 +2,8 @@ import * as React from 'react';
 import APIURL from "../helpers/environment";
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import ArrowDropDownCircleRoundedIcon from '@material-ui/icons/ArrowDropDownCircleRounded';
+// import ArrowDropDownCircleRoundedIcon from '@material-ui/icons/ArrowDropDownCircleRounded';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditParty from './EditParty';
 // import Typography from '@material-ui/core/Typography';
 var dayjs = require('dayjs');
@@ -40,7 +40,7 @@ type party = {
     seated: boolean,
     leftUnseated: boolean,
     specialNotes: string,
-    staffId: number,
+    staffId: number, 
     restaurantId: number,
     uniqueCode: string,
     timeArrived: string
@@ -340,7 +340,7 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                                 </Grid>
                                 <Grid item container sm={2} style={{justifyContent: "space-between"}}>
 
-                                    <ArrowDropDownCircleRoundedIcon color="secondary" fontSize="large" className={party.isExpanded? "" : "rotateArrowBtn"} 
+                                    <ExpandMoreIcon color={party.seated? "inherit" :"secondary"} fontSize="large" className={party.isExpanded? "regularArrowBtn" : "rotateArrowBtn"} 
                                     onClick={() => this.changeExpandStatus(party, index)}/>
                                     <Button variant="contained"  id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
                                         this.seatedUpdate(party)}}>

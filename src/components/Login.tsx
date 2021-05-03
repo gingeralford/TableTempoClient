@@ -48,6 +48,8 @@ class Login extends React.Component<LoginProps, LoginState> {
             .then((data) => {
                 console.log(data)
                 this.props.updateToken(data.sessionToken);
+                console.log("admin status", data.admin)
+                localStorage.setItem('admin', data.admin);
                 console.log('Logged In!');
             })
             .catch((err) => console.log(err));
@@ -63,6 +65,7 @@ class Login extends React.Component<LoginProps, LoginState> {
                     <Grid item md={4} xs={10} >
                         <Box >
                             <Box className="salesText">
+                            {/* TODO: Replace this text! */}
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore culpa, iste odit itaque ipsa ullam! Sed dolores temporibus quisquam molestias dolorum perferendis, perspiciatis est officia aut error odit iusto omnis!
                             </Box>
                         </Box>

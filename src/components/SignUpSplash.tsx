@@ -80,6 +80,7 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
             .then((response) => response.json())
             .then((data) => {
                 this.props.updateToken(data.sessionToken);
+                localStorage.setItem('admin', data.staff.admin);
                 console.log('Staff account Created Too!');
             })
             .catch((err) => console.log(err));

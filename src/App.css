@@ -156,10 +156,20 @@ html, body {
   padding: 2px 8px;
 }
 
+.regularArrowBtn {
+  
+  filter: drop-shadow(-1px -1px 1px black);
+  transform: rotate(180deg);
+}
+
 .rotateArrowBtn {
-  transform: rotate(90deg);
+
   /* filter: drop-shadow(2px 2px 10px #707070); */
   filter: drop-shadow(1px 1px 1px black);
+}
+
+.seatedArrowBtn {
+  color: #707070;
 }
 
 #seatedBtn {
@@ -208,6 +218,10 @@ html, body {
 #admin {
   position: relative;
   z-index: 5;
+  text-align: left;
+  padding: 10px 0 10px 0;
+  width: 90%;
+  margin: auto;
 }
 
 .sidebarLinks {

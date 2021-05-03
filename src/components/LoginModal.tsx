@@ -48,6 +48,8 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
             .then((data) => {
                 console.log(data)
                 this.props.updateToken(data.sessionToken);
+                console.log("admin status", data.staff.admin);
+                localStorage.setItem('admin', data.staff.admin);
                 console.log('Logged In!');
             })
             .catch((err) => console.log(err));
