@@ -26,6 +26,7 @@ export interface SiteNavProps {
  
 export interface SiteNavState {
   isDrawerOpened: boolean,
+  token: string | null
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -87,7 +88,7 @@ function LeftDrawer(props:ILeftDrawer) {
           <div id="drawerInside">
 
           {/* Only shows link to /admin if admin=true */}
-          {localStorage.getItem('admin') ? 
+          {localStorage.getItem('admin') === "true" ? 
           <Link to='/admin' className="sidebarLinks" >
             <List>
               <ListItem button key='Admin'  >
@@ -138,12 +139,16 @@ function ButtonAppBar(props: IButtonAppBar) {
     <div className={classes.root}>
       <AppBar position="sticky" style={ { backgroundColor: '#FFFFFF'}}>
         <Toolbar className="toolbarItems">
+
+          {props.token == localStorage.getItem('token') ? 
+          <div style={{ width: "70px"}}>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => {props.toggleDrawerStatus()}}>
-            <div>
+            
             <MenuIcon />
             {/* Has to be direct call, not fat arrow function */}
-            </div>
-          </IconButton>
+            
+          </IconButton></div>
+          : <div style={{ width: "70px"}}></div>}
           <div>
           <Link to="/" style={{textDecoration: "none"}}><Typography variant="h1" >
             Table Tempo
@@ -169,6 +174,7 @@ class SiteNav extends React.Component<SiteNavProps, SiteNavState> {
         super(props);
         this.state = {  
           isDrawerOpened: false,
+          token: props.token
          };
     }
 

@@ -2,7 +2,6 @@ import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import APIURL from "../helpers/environment";
 import Grid from '@material-ui/core/Grid';
-// import Grid from '@material-ui/core/Grid';
 var dayjs = require('dayjs');
 
 export interface EditPartyProps {
@@ -131,26 +130,26 @@ class EditParty extends React.Component<EditPartyProps, EditPartyState> {
           };
     }
 
-    constantUpdate = () => {
-        this.setState({ party: {
-            isEditing: this.state.isEditing,
-            isExpanded: this.state.isExpanded,
-            id: this.state.id,
-            name: this.state.name,
-            partyNum: this.state.partyNum,
-            telephone: this.state.telephone,
-            over21: this.state.over21,
-            timeEstimated: this.state.timeEstimated,
-            timeSeated: this.state.timeSeated,
-            seated: this.state.seated,
-            leftUnseated: this.state.leftUnseated,
-            specialNotes: this.state.specialNotes,
-            staffId: this.state.staffId,
-            restaurantId: this.state.restaurantId,
-            uniqueCode: this.state.uniqueCode,
-            timeArrived: this.state.timeArrived
-        }})
-    };
+    // constantUpdate = () => {
+    //     this.setState({ party: {
+    //         isEditing: this.state.isEditing,
+    //         isExpanded: this.state.isExpanded,
+    //         id: this.state.id,
+    //         name: this.state.name,
+    //         partyNum: this.state.partyNum,
+    //         telephone: this.state.telephone,
+    //         over21: this.state.over21,
+    //         timeEstimated: this.state.timeEstimated,
+    //         timeSeated: this.state.timeSeated,
+    //         seated: this.state.seated,
+    //         leftUnseated: this.state.leftUnseated,
+    //         specialNotes: this.state.specialNotes,
+    //         staffId: this.state.staffId,
+    //         restaurantId: this.state.restaurantId,
+    //         uniqueCode: this.state.uniqueCode,
+    //         timeArrived: this.state.timeArrived
+    //     }})
+    // };
 
 
     updateParty = (e: React.FormEvent, party: IParty) => {

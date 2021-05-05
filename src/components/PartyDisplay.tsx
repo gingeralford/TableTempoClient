@@ -46,7 +46,6 @@ type party = {
     timeArrived: string
 }
 
-//Doesn't work. but especially doesn't work if I try to make vars not optional
 type localVars = {
     isEditing?: boolean;
     isExpanded?: boolean;

@@ -3,10 +3,12 @@ import './App.css';
 import SignUpSplash from './components/SignUpSplash';
 import SiteNav from './components/SiteNav';
 import Dashboard from './components/Dashboard';
-import Login from './components/Login'
+import Login from './components/Login';
+import StaffCreate from './components/StaffCreate';
 import {Route, Switch} from 'react-router-dom';
 import Admin from './components/Admin';
 import Reports from './components/Reports';
+
 
 //MATERIAL-UI
 import {
@@ -138,6 +140,11 @@ render(){
         token={this.state.sessionToken}
       /></Route>
       <Route exact path="/reports"><Reports 
+        token={this.state.sessionToken}
+      /></Route>
+      <Route path="/staff/:uuid"><StaffCreate 
+        updateToken={this.updateToken}
+        clearToken={this.clearToken}
         token={this.state.sessionToken}
       /></Route>
       </Switch>
