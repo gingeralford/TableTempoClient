@@ -84,7 +84,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
     render(){
         return (
             <div>
-            <Button variant="contained" color="secondary" style={{ fontFamily: "Abril Fatface, Times new Roman", fontSize: "1.2em", padding: "4px 8px"}} onClick={this.handleOpen}>
+            <Button variant="contained" color="secondary" id="loginBtn" onClick={this.handleOpen}>
                 Log In
             </Button>
             <Modal

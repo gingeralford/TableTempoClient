@@ -161,7 +161,7 @@ function ButtonAppBar(props: IButtonAppBar) {
           </IconButton></div>
           : <div style={{ width: "70px"}}></div>}
           <div>
-          <Link to="/" style={{textDecoration: "none"}}><Typography variant="h1" >
+          <Link to="/" style={{textDecoration: "none"}}><Typography variant="h1" id="appName">
             Table Tempo
           </Typography></Link></div>
           {props.token != localStorage.getItem('token') ? 
@@ -170,7 +170,7 @@ function ButtonAppBar(props: IButtonAppBar) {
             clearToken={props.clearToken}
             token={props.token}
           /> :
-          <Button variant="contained" color="secondary" style={{ fontFamily: "Abril Fatface, Times new Roman", fontSize: "1.2em", padding: "4px 8px"}} onClick={props.clearToken}
+          <Button variant="contained" color="secondary" id="loginBtn" onClick={props.clearToken}
           >Log Out</Button>
           }
         </Toolbar>

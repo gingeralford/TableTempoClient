@@ -2,7 +2,13 @@ import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import APIURL from "../helpers/environment";
 import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField'
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import Checkbox from '@material-ui/core/Checkbox';
 var dayjs = require('dayjs');
+
 
 export interface EditPartyProps {
     party: {
@@ -215,47 +221,78 @@ class EditParty extends React.Component<EditPartyProps, EditPartyState> {
                             <TextField className="partyinputs" required variant="filled" label="Password" type="password" onChange={(event) => {
                                 this.setState({ password: event.target.value})
                             }} /><br/> */}
-                            <Grid container className="partyDisplayBoxLine1" style={{justifyContent: "space-between"}} >
-                                <Grid item sm={2} >
+                            <Grid container style={{justifyContent: "space-between"}} >
+                                <Grid item sm={2} xs={4} className="partyDisplayBoxLine1">
                                     <span className={this.state.seated === true || this.state.leftUnseated === true ? "timeBox seatedTimeBox" : dayjs(this.state.timeEstimated, 'h:mm a') <= time ? "timeBox overdueTimeBox":"timeBox"}>{dayjs(this.state.timeEstimated).format('h:mm a')}</span>
                                 </Grid>
-                                <Grid item sm={1}>
-                                    <input className="partyinputs  partyNumInput"  type="number" placeholder="Number of Guests" value={this.state.partyNum}
+                                <Grid item sm={1} xs={3} className="partyDisplayBoxLine1">
+                                    <TextField margin="none" size="small" variant="outlined" value={this.state.partyNum} className="partyinputs" type="number" label="# Guests"
+                                    onChange={(event) => {
+                                        this.setState({ partyNum: parseInt(event.target.value)})
+                                    }}/>
+                                    {/* <input className="partyinputs  partyNumInput"  type="number" placeholder="Number of Guests" value={this.state.partyNum}
                                     onChange={(event) => {
                                         this.setState({ partyNum: parseInt(event.target.value)})
                                     }}
-                                    />
+                                    /> */}
                                 </Grid>
-                                <Grid item sm={3}>
-                                    <input className="partyinputs" type="textfield" placeholder="Party Name" value={this.state.name}
+                                <Grid item sm={3} xs={5} className="partyDisplayBoxLine1">
+                                    <TextField margin="none" variant="outlined" value={this.state.name} className="partyinputs" label="Party Name" type="textfield" size="small" 
+                                    onChange={(event) => {
+                                        this.setState({ name: event.target.value})
+                                    }} /><br/>
+                                    {/* <input className="partyinputs" type="textfield" placeholder="Party Name" value={this.state.name}
                                     onChange={(event) => {
                                         this.setState({ name: event.target.value })
-                                    }}/>
+                                    }}/> */}
                                 </Grid>
-                                <Grid item sm={3}>
-                                    <input className="partyinputs" type="textfield" placeholder="telephone #" value={this.state.telephone.slice(2,13)}
+                                <Grid item sm={3} xs={12} className="partyDisplayBoxLine1">
+                                    <TextField size="small" variant="outlined" className="partyinputs" value={this.state.telephone}type="textfield" label="telephone #" 
+                                    onChange={(event) => {
+                                        this.setState({ telephone: `+1${event.target.value}`})
+                                    }}/>
+                                    {/* <input className="partyinputs" type="textfield" placeholder="telephone #" value={this.state.telephone.slice(2,13)}
                                     onChange={(event) => {
                                         this.setState({ telephone: `+1${event.target.value}`})
                                     }}
-                                    />
+                                    /> */}
                                 </Grid>
-                                <Grid item sm={2} style={{ textAlign: "right"}}>
-                                    <label>Over 21?   
+                                <Grid item sm={2} xs={6}  className="partyDisplayBoxLine1">
+                                <FormControl component="fieldset">
+                                <FormGroup aria-label="Over 21" row>
+                                <FormControlLabel
+                                    control={<Checkbox color="primary" 
+                                    checked={this.state.over21 ? true : false}
+                                    value={this.state.over21 ? "true": "false"}
+                                    onChange={(event) => {
+                                        this.setState({ over21: event.target.checked})
+                                    }}/>}
+                                    label="Over 21?"
+                                    labelPlacement="start"
+                                    />
+                                </FormGroup>
+                                </FormControl>
+                                    {/* <label>Over 21?   
                                     <input className="partyinputs" style={{ width: "auto"}}type="checkbox" placeholder="over 21?" checked={this.state.over21 ? true : false} value={this.state.over21 ? "true": "false"}
                                     onChange={(event) => {
                                         this.setState({ over21: event.target.checked})
                                     }}
-                                    /></label>
+                                    /></label> */}
                                 </Grid>
-                                <Grid item sm={1} style={{ textAlign: "right"}}>
-                                    <Button variant="contained"  id={this.state.seated === true || this.state.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
+                                <Grid item sm={1} xs={6} style={{ textAlign: "right"}} className="partyDisplayBoxLine1">
+                                    <Button className="lineUpBtn" variant="contained"  id={this.state.seated === true || this.state.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
                                                 this.props.seatedUpdate(this.state.party)}}>
                                                 {this.state.seated === false ? "Seat" : "Sat"}
                                     </Button>
                                 </Grid>
                             </Grid>
-                            <Grid container className="partyDisplayBoxLine1" style={{justifyContent: "space-between"}}>
-                                <Grid item sm={6}>
+                            <Grid container style={{justifyContent: "space-between"}}>
+                                <Grid item sm={6} xs={12} className="partyDisplayBoxLine1">
+                                    <TextField multiline={true} rows={1} size="small" variant="outlined" value={this.state.specialNotes}className="partyinputs"  label="Notes"
+                                    onChange={(event) => {
+                                        this.setState({ specialNotes: event.target.value})
+                                    }}
+                                    />
                             {/* 
                             <label>Estimated Time?<br/>
                             <input className="partyinputs" type="time" placeholder="Estimated Mins til Seated" value={dayjs(this.state.timeArrived).format('h:mm a')}
@@ -268,18 +305,17 @@ class EditParty extends React.Component<EditPartyProps, EditPartyState> {
                             //     this.setState({ timeSeated: new Date(event.target.value)})
                             // }}
                             /></label><br/> */}
-                            <textarea className="partyinputs"  placeholder="Special Notes" value={this.state.specialNotes}
+                            {/* <textarea className="partyinputs"  placeholder="Special Notes" value={this.state.specialNotes}
                             onChange={(event) => {
                                 this.setState({ specialNotes: event.target.value})
-                            }}/>
+                            }}/> */}
                             </Grid>
-                                <Grid item container style={{justifyContent: "space-between", width: "100%"}} sm={6}>
+                                <Grid item container className="partyDisplayBoxLine1"style={{justifyContent: "space-between", width: "100%"}} sm={6} xs={12}>
                                 <Button variant="contained"  fullWidth={false}  id={this.state.seated === true || this.state.leftUnseated === true ? "seatedBtn" : "orangeBtn"} 
                                         onClick={() => this.props.changeEditStatus(this.props.party, this.props.index)}>Cancel</Button>
 
                                 <Button variant="contained"  fullWidth={false} color="secondary" id={this.state.seated === true || this.state.leftUnseated === true ? "seatedBtn" : "orangeBtn"} type="submit" >Save</Button>
-                                <Button variant="contained"  id={this.state.seated === true || this.state.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
-                                                this.props.leftUpdate(this.state.party)}}>{this.state.leftUnseated === false ? "Leaving" : "Left"}
+                                <Button variant="contained"  id={this.state.seated === true || this.state.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{this.props.leftUpdate(this.state.party)}}>{this.state.leftUnseated === false ? "Leaving" : "Left"}
                                 </Button>
                                 
                                 <Button variant="contained" fullWidth={false}  id={this.state.seated === true || this.state.leftUnseated === true ? "seatedBtn" : "delete"} onClick={() => this.props.deleteParty(this.props.party)}>Delete</Button><br/>

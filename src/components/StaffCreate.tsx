@@ -90,7 +90,7 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
                 // this.props.updateToken(data.sessionToken);
                 // localStorage.setItem('admin', data.staff.admin);
                 console.log('New Staff Account Created!');
-                alert("New staff account created. Please Log In.")
+                alert("New staff account created. Please Log In to use this account.")
             })
             .catch((err) => console.log(err));
         }

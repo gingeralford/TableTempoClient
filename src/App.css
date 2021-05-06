@@ -30,6 +30,12 @@ html, body {
   object-fit:fill;
 }
 
+#loginBtn {
+  font-family: "Abril Fatface", "Times New Roman";
+  font-size: 1.1rem;
+  padding: 4px 8px;
+}
+
 .salesText {
   box-sizing: border-box;
   padding: 20px;
@@ -57,7 +63,7 @@ html, body {
 .partyinputs {
   margin: auto;
   font-size: 1em;
-  /* padding: 4px; */
+  padding: 4px;
   /* border: 1px solid #707070; */
   border-radius: 5px;
   color: #707070;
@@ -67,7 +73,8 @@ html, body {
 }
 
 .partyNumInput {
-  width: 40px;
+  width: 20px;
+  min-width: none;
 }
 
 #wideBtn {
@@ -122,8 +129,8 @@ html, body {
 .partyDisplayBoxLine1 {
   /* margin-top: 12px;
   margin-bottom: 12px; */
-  line-height: 6vh;
-  height: 6vh;
+  line-height: 50px;
+  height: 50px;
   justify-content: space-between;
   vertical-align: middle;
 }
@@ -133,6 +140,7 @@ html, body {
   background-color: white;
   color: #007CBE;
   padding: 5px;
+  margin-bottom: 10px;
   border: solid 1px #707070;
   border-radius: 5px;
   text-align:left;
@@ -156,7 +164,6 @@ html, body {
   display: inline-block;
   vertical-align: middle;
   line-height: normal;
-
 }
 
 #orangeBtn {
@@ -256,3 +263,18 @@ html, body {
   color:#007CBE;
 }
 
+@media only screen and (max-width: 700px) {
+  .partyDisplayBoxLine1 {
+    font-size: 1rem;
+  }
+  .partyinputs {
+    width: 100%;
+  }
+  #loginBtn {
+    font-size: 1rem;
+    padding: 4px;
+  }
+  #appName {
+    font-size: 1.8rem;
+  }
+}

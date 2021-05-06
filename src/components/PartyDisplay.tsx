@@ -351,13 +351,13 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                             {party.isExpanded ? 
                             
                             <Grid container  style={{ marginTop: "12px"}}>
-                                <Grid item md={6} sm={4} xs={12} className="partyDisplayBoxLine1">
+                                <Grid item md={5} sm={4} xs={12} className="partyDisplayBoxLine1">
                                     <span className="lineUpBtn">Notes: <span className="notes">{party.specialNotes}</span></span>
                                 </Grid>
                                 <Grid item md={3} sm={3} xs={12} className="partyDisplayBoxLine1">
                                     <span className="lineUpBtn">{this.formatPhoneNumber(party.telephone)}</span>
                                 </Grid>
-                                <Grid item container md={3} sm={5} xs={12} style={{justifyContent: "space-between"}} className="partyDisplayBoxLine1">
+                                <Grid item container md={4} sm={5} xs={12} style={{justifyContent: "space-between"}} className="partyDisplayBoxLine1">
                                     <Grid item>
                                     <Button variant="contained"  fullWidth={false}  id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} 
                                     onClick={() => this.changeEditStatus(party, index)}
