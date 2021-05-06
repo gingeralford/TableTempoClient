@@ -48,6 +48,8 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
             .then((data) => {
                 console.log(data)
                 this.props.updateToken(data.sessionToken);
+                console.log("admin status", data.staff.admin);
+                localStorage.setItem('admin', data.staff.admin);
                 console.log('Logged In!');
             })
             .catch((err) => console.log(err));
@@ -74,7 +76,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
         }} /><br/>
         <Button variant="contained"  fullWidth={true} color="secondary" id="wideBtn" onClick={this.handleSubmit}>Log In</Button><br/>
       </form>
-      <Typography variant="body2">Don't have an account? You'll need to notify your Restaurant manager to send you a link to Sign up!</Typography>
+      <Typography variant="body2">Don't have an account? You'll need to notify your Restaurant manager to send you a custom link to Sign up!</Typography>
     </div>
   );
 
@@ -82,7 +84,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
     render(){
         return (
             <div>
-            <Button variant="contained" color="secondary" style={{ fontFamily: "Abril Fatface, Times new Roman", fontSize: "1.2em", padding: "4px 8px"}} onClick={this.handleOpen}>
+            <Button variant="contained" color="secondary" id="loginBtn" onClick={this.handleOpen}>
                 Log In
             </Button>
             <Modal

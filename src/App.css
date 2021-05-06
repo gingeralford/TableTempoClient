@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap');
+
 html, body {
   width: 100%;
   height: 100%;
@@ -28,6 +30,12 @@ html, body {
   object-fit:fill;
 }
 
+#loginBtn {
+  font-family: "Abril Fatface", "Times New Roman";
+  font-size: 1.1rem;
+  padding: 4px 8px;
+}
+
 .salesText {
   box-sizing: border-box;
   padding: 20px;
@@ -51,6 +59,24 @@ html, body {
   border: 1px solid #707070;
   border-radius: 5px;
 }
+
+.partyinputs {
+  margin: auto;
+  font-size: 1em;
+  padding: 4px;
+  /* border: 1px solid #707070; */
+  border-radius: 5px;
+  color: #707070;
+  /* font-family: "Raleway", sans-serif;
+  font-weight: 700; */
+  width: 90%;
+}
+
+.partyNumInput {
+  width: 20px;
+  min-width: none;
+}
+
 #wideBtn {
   margin: auto;
   font-size: 1.4em;
@@ -74,7 +100,7 @@ html, body {
 }
 
 .partyDisplayBox {
-  background-color: #FFD639;
+  background-color: #007CBE;
   border: 1px #707070 solid;
   border-radius: 10px;
   width: 86vw;
@@ -82,68 +108,95 @@ html, body {
   margin: 10px auto;
   padding: 12px;
   align-self: center;
+  align-items: center;
   font-weight: 700;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   text-align:left;
   color: white;
+  font-family: 'Raleway', sans-serif;
+  height: auto;
 }
 
 .seatedPartyDisplayBox {
-  background-color: none;
-  color: #707070 !important;
-  border: 1px #707070 solid;
-  border-radius: 10px;
-  width: 86vw;
-  max-width: 1000px;
-  margin: 10px auto;
-  padding: 12px;
-  align-self: center;
-  font-weight: 700;
-  font-size: 1.2em;
-  text-align:left;
-  color: white;
+  background-color: #FFF3C2;
+  color: #707070;
+}
+
+.overduePartyDisplayBox {
+  background-color:#FFD639;
 }
 
 .partyDisplayBoxLine1 {
-  padding: 6px;
-  line-height: 5vh;
+  /* margin-top: 12px;
+  margin-bottom: 12px; */
+  line-height: 50px;
+  height: 50px;
   justify-content: space-between;
+  vertical-align: middle;
 }
 
 .timeBox {
+  box-sizing:border-box;
   background-color: white;
   color: #007CBE;
   padding: 5px;
+  margin-bottom: 10px;
   border: solid 1px #707070;
   border-radius: 5px;
   text-align:left;
   align-self: center;
+  justify-self: center;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
 }
 
 .seatedTimeBox {
-  background-color: none !important;
-  color: #9b7d7d !important;
-  padding: 5px;
-  border: solid 1px #707070;
-  border-radius: 5px;
-  text-align:left;
-  align-self: center;
+  background-color: #FFF3C2;
+  color: #707070;
+}
+
+.overdueTimeBox {
+  color: #9a423b;
+}
+
+.lineUpBtn {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
 }
 
 #orangeBtn {
   background-color: #FBAF00;
   color: #FFFFFF;
   align-self: center;
-  justify-self: end;
+  /* justify-self: end; */
   font-weight: 700;
   font-size: 1em;
   padding: 2px 8px;
 }
+
+.regularArrowBtn {
+  
+  filter: drop-shadow(-1px -1px 1px black);
+  transform: rotate(180deg);
+}
+
+.rotateArrowBtn {
+
+  /* filter: drop-shadow(2px 2px 10px #707070); */
+  filter: drop-shadow(1px 1px 1px black);
+}
+
+.seatedArrowBtn {
+  color: #707070;
+}
+
 #seatedBtn {
   background-color: #FFF3C2;
   color: #707070;
-  align-self: center;
-  justify-self: end;
+  /* align-self: center;
+  justify-self: center; */
   font-weight: 700;
   font-size: 1em;
   border: 1px solid #707070;
@@ -155,10 +208,73 @@ html, body {
   background-color: #9a423b;
   color: #FFFFFF;
   align-self: center;
-  justify-self: end;
+  /* justify-self: end; */
   font-weight: 700;
   font-size: 1em;
   padding: 2px 8px;
 }
 
+.notes {
+  font-size: .8em;
+  font-style: italic;
+}
 
+#drawer {
+  margin-top: -60px;
+  z-index: 3;
+  margin-left: 0px;
+  position: fixed;
+  color: #707070;
+  background-color: white;
+}
+#drawerInside {
+  color: #707070;
+
+}
+/* .MuiDrawer-paper {
+  background-color: red;
+} */
+
+#admin {
+  position: relative;
+  z-index: 5;
+  text-align: left;
+  padding: 10px 0 10px 0;
+  width: 90%;
+  margin: auto;
+  padding-bottom: 30px;
+}
+
+.sidebarLinks {
+  text-decoration: none;
+  color: #707070;
+}
+
+#footer {
+  padding: 30px 0 30px 0;
+  z-index: 10;
+  background-color: #007CBE;
+  color: #FBAF00;
+  text-align: center;
+  position: relative;
+}
+
+#admin a {
+  color:#007CBE;
+}
+
+@media only screen and (max-width: 700px) {
+  .partyDisplayBoxLine1 {
+    font-size: 1rem;
+  }
+  .partyinputs {
+    width: 100%;
+  }
+  #loginBtn {
+    font-size: 1rem;
+    padding: 4px;
+  }
+  #appName {
+    font-size: 1.8rem;
+  }
+}

@@ -3,8 +3,14 @@ import './App.css';
 import SignUpSplash from './components/SignUpSplash';
 import SiteNav from './components/SiteNav';
 import Dashboard from './components/Dashboard';
-import Login from './components/Login'
+import Login from './components/Login';
+import StaffCreate from './components/StaffCreate';
 import {Route, Switch} from 'react-router-dom';
+import Admin from './components/Admin';
+// import Typography from '@material-ui/core/Typography';
+// import SiteFooter from './components/SiteFooter';
+import Reports from './components/Reports';
+
 
 //MATERIAL-UI
 import {
@@ -31,9 +37,15 @@ const customTheme = createMuiTheme({
       fontSize: '2em',
       color: '#707070'
     },
+    h2: {
+      fontFamily: 'Abril Fatface',
+      fontSize: '1.2em',
+      color: '#007CBE'
+    },
     body1: { 
       fontFamily: 'Raleway, Arial',
-      fontSize: '1em',
+      fontSize: '.9em',
+      fontWeight: 700,
       color: '#FFFFFF' 
     },
     body2: {
@@ -52,12 +64,20 @@ const customTheme = createMuiTheme({
     },
     MuiLink: {
       root: {
-        underline: 'none'
+        underline: 'none',
+        textTransform: 'none',
+        color: '#707070'
       }
+    },
+    MuiListItemText: {
+      root: {
+      color: "#707070"
+      }
+    }
     }
   },
 
-});
+);
 
 interface IProps {
   
@@ -88,7 +108,6 @@ clearToken = () => {
   console.log("Token cleared and Logged out");
 };
 
-
 componentDidMount(){
   if (localStorage.getItem("token")) {
     this.setState({ sessionToken: localStorage.getItem("token")
@@ -114,32 +133,58 @@ render(){
           token={this.state.sessionToken}
         /> }
       </Route>
-      <Route exact path="/login"><Login 
+      <Route exact path="/login">
+        {this.state.sessionToken == localStorage.getItem('token') ?
+          <Login 
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          token={this.state.sessionToken}
+          /> : <SignUpSplash 
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          token={this.state.sessionToken}
+        />}
+      </Route>
+      <Route exact path="/admin">
+        {this.state.sessionToken == localStorage.getItem('token') ?
+          <Admin 
+          token={this.state.sessionToken}
+          /> : 
+          <SignUpSplash 
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          token={this.state.sessionToken}
+        />}
+      </Route>
+      <Route exact path="/reports">
+        {this.state.sessionToken == localStorage.getItem('token') ?
+        <Reports 
+        token={this.state.sessionToken}
+        /> : <SignUpSplash 
         updateToken={this.updateToken}
         clearToken={this.clearToken}
         token={this.state.sessionToken}
-      /></Route>
+      />}</Route>
+      <Route path="/staff/:uuid">
+        {this.state.sessionToken == localStorage.getItem('token') ?
+          <StaffCreate 
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          token={this.state.sessionToken}
+          /> : <SignUpSplash 
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          token={this.state.sessionToken}
+        />}
+        </Route>
+
       </Switch>
+      
+      {/* <SiteFooter /> */}
       </ThemeProvider>
     </div>
   )
 }
 }
-
-// const App: React.FunctionComponent = () => {
-//   return (
-    
-//     <div className="App">
-//       <ThemeProvider theme={customTheme}>
-//       <SiteNav />
-//       <Switch>
-//       <Route exact path="/"><SignUpSplash /></Route>
-      
-//       </Switch>
-//       </ThemeProvider>
-//     </div>
-    
-//   );
-// }
 
 export default App;

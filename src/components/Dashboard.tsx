@@ -3,12 +3,14 @@ import PartyCreate from './PartyCreate';
 import PartyDisplay from './PartyDisplay';
 import APIURL from "../helpers/environment";
 
+
 export interface DashboardProps {
     token: string | null
 }
  
 export interface DashboardState {
-    // updating: string,
+
+    loading: boolean,
     parties: {
         id: number,
         name: string,
@@ -31,11 +33,12 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     constructor(props: DashboardProps) {
         super(props);
         this.state = {  
+            loading: true,
             parties: [{
                 id: 0,
                 name: "",
                 partyNum: 0,
-                telephone: "",
+                telephone: "Look at me",
                 over21: false,
                 timeEstimated: "",
                 timeSeated: "",
@@ -68,17 +71,20 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     }
 
     fetchParties = () => {
+        this.setState({ loading: true})
         fetch(`${APIURL}/party/today`, {
             method: "GET",
             headers: new Headers({
               "Content-Type": "application/json",
               Authorization: this.removeNulls(localStorage.getItem('token'))
             }),
+            
           })
             .then((res) => res.json())
             .then((parties) => {
               this.setState({ parties: parties})
-              console.log("state array",this.state.parties);
+              this.setState({ loading: false})
+            //   console.log("state array",this.state.parties);
             })
             .catch((err) => console.log(err));
     };
@@ -94,8 +100,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             <div style={{backgroundColor: '#FFF3C2', position: 'fixed', top: "0px", left: '0px', minHeight: '100vh', width: '100%', }} ></div>
                 <div id="dashboard">
                 <PartyCreate token={this.props.token}  parties={this.state.parties} fetchParties={this.fetchParties}/>
-                <PartyDisplay  parties={this.state.parties} fetchParties={this.fetchParties}/>
-                
+                {!this.state.loading &&<PartyDisplay  parties={this.state.parties} fetchParties={this.fetchParties}/>}
             </div>
             </>
          );
