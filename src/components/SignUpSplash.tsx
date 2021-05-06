@@ -121,24 +121,6 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
                                 }} /><br/>
                             <Button variant="contained"  fullWidth={true} color="secondary" id="wideBtn" onClick={this.handleSubmit}>Sign Up Now</Button><br/>
                         </form>
-                            {/* <form className="signUpForm">
-                                <input className="signUpFields" type="textfield" placeholder="Restaurant Name"
-                                onChange={(event) => {
-                                    this.setState({ restaurantName: event.target.value})
-                                }}
-                                /><br/>
-                                <input className="signUpFields" type="email" placeholder="Email Address" 
-                                onChange={(event) => {
-                                    this.setState({ email: event.target.value})
-                                }} /><br/>
-                                <input className="signUpFields" type="password" placeholder="Password"
-                                onChange={(event) => {
-                                    this.setState({ password: event.target.value})
-                                }}
-                                /><br/>
-                                <Button variant="contained"  fullWidth={true} color="secondary" id="wideBtn" onClick={this.handleSubmit}>Sign Up Now</Button><br/>
-                            </form>
-                         */}
                             </Box>
                         </Box>
                     </Grid>

@@ -14,9 +14,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import LineStyleIcon from '@material-ui/icons/LineStyle';
+import CopyrightIcon from '@material-ui/icons/Copyright';
 
 export interface SiteNavProps {
   updateToken: Function,
@@ -117,7 +119,16 @@ function LeftDrawer(props:ILeftDrawer) {
               <ListItemText primary={<Typography variant="body2">Dashboard</Typography>} />
             </ListItem>
             </List>
-          </Link>
+            </Link>
+            <Divider />
+            <List>
+            <ListItem key='Copyright'>
+              <ListItemIcon><CopyrightIcon color="primary"/>
+              </ListItemIcon>
+              <ListItemText primary={<Typography variant="body2">Ginger Alford 2021</Typography>} />
+            </ListItem>
+            </List>
+          
           </div>
         </Drawer>
         </div>

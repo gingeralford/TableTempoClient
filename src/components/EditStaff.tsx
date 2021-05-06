@@ -3,6 +3,7 @@ import APIURL from "../helpers/environment";
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 var dayjs = require('dayjs');
 
@@ -148,7 +149,11 @@ class EditStaff extends React.Component<EditStaffProps, EditStaffState> {
                                 this.props.changeEditStatus(this.props.staff, this.props.index);
                             })}}>
                         <p>
-                        
+                        {/* <p>
+                            password: <TextField size="small" type="text" variant="filled" value={this.state.password} onChange={(event) => {
+                                    this.setState({ password: event.target.value})
+                                }}></TextField>
+                        </p> */}
                         <FormControlLabel 
                             control={<Checkbox color="secondary" checked={this.state.admin ? true : false} onChange={(event) => {
                                 this.setState({ admin: event.target.checked}, () => console.log(this.state.admin))
@@ -163,10 +168,10 @@ class EditStaff extends React.Component<EditStaffProps, EditStaffState> {
                             label={<Typography variant="body2" style={{ fontSize: "14px"}}>Active</Typography>}
                             labelPlacement="start"
                             /></p>
-                        <p> 
-                        <Button variant="contained" color="secondary" type="submit" >Save</Button></p>
-                        <p> 
-                        <Button variant="contained" id="delete" onClick={() => this.props.deleteStaff(this.props.staff)}>Delete</Button></p>
+                        <p> <Button variant="contained" color="secondary" onClick={() => this.props.changeEditStatus(this.props.staff, this.props.index)}>Cancel</Button></p>    
+                        <p> <Button variant="contained" color="secondary" type="submit" >Save</Button></p>
+                        <p> <Button variant="contained" id="delete" onClick={() => this.props.deleteStaff(this.props.staff)}>Delete</Button></p>
+                        
                         <hr/></form>
                         </Typography>
                     </p>

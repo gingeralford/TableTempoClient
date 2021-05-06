@@ -3,6 +3,7 @@ import PartyCreate from './PartyCreate';
 import PartyDisplay from './PartyDisplay';
 import APIURL from "../helpers/environment";
 
+
 export interface DashboardProps {
     token: string | null
 }
@@ -100,7 +101,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 <div id="dashboard">
                 <PartyCreate token={this.props.token}  parties={this.state.parties} fetchParties={this.fetchParties}/>
                 {!this.state.loading &&<PartyDisplay  parties={this.state.parties} fetchParties={this.fetchParties}/>}
-                
             </div>
             </>
          );

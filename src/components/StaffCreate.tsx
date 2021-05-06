@@ -23,7 +23,11 @@ type PropsType = RouteComponentProps<PathParams> & StaffCreateProps;
 export interface StaffCreateState {
     email: string,
     password: string,
-    token: string | null
+    token: string | null,
+    resName: string,
+    restaurant: {
+        restaurantName: string,
+    }
 }
  
 class StaffCreate extends React.Component<PropsType, StaffCreateState> {
@@ -32,9 +36,35 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
         this.state = {  
             email: "",
             password: "",
-            token: ""
+            token: "",
+            resName: "",
+            restaurant: {
+                restaurantName: "",
+            }
          };
     }
+
+    fetchRestaurant = () => {
+        const uuid = this.props.match.params.uuid;
+        fetch(`${APIURL}/restaurant/lookup/${uuid}`, {
+            method: "GET",
+            headers: new Headers({
+                "Content-Type": "application/json",
+            }),
+        })
+            .then((response) => response.json())
+            .then((restaurant) => {
+                // console.log(restaurant)
+                this.setState({ resName: restaurant.restaurantName})
+                // console.log('Got Name');
+            })
+            .catch((err) => console.log(err));
+        }
+    
+    componentDidMount() {
+        this.fetchRestaurant();
+    }
+    
 
     handleSubmit = (event : any) => {
         event.preventDefault();
@@ -57,9 +87,10 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
-                this.props.updateToken(data.sessionToken);
-                localStorage.setItem('admin', data.staff.admin);
+                // this.props.updateToken(data.sessionToken);
+                // localStorage.setItem('admin', data.staff.admin);
                 console.log('New Staff Account Created!');
+                alert("New staff account created. Please Log In.")
             })
             .catch((err) => console.log(err));
         }
@@ -75,6 +106,7 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
                     <Grid item md={4} xs={10} >
                         <Box >
                             <Box className="salesText">
+                            <h2 style={{ fontFamily: "Abril Fatface, Times new Roman", fontSize: "2.5em"}}>{this.state.resName}</h2>
                             <p>
                             This is the one time sign up page for restaurant staff. You should have followed this link from your employer.</p>
                             <p> This is not a login page and is for creating new accounts only. </p>

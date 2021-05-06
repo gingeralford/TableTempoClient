@@ -168,9 +168,9 @@ class Admin extends React.Component<AdminProps, AdminState> {
                     )
                 })}
                 <h2><Typography variant="h2">Add New Staff</Typography></h2>
-                <p>Send your employees the following link to create their account and password. The link is custom to your account and will automatically link them to this restaurant.</p>
+                <Typography variant="body2"><p>Send your employees the following link to create their account and password. The link is custom to your account and will automatically link them to this restaurant.</p>
 
-                <Link to={`/staff/${this.state.staffList[0].uniqueCode}`}><span id="staffURL">{`${APIURL}/staff/${this.state.staffList[0].uniqueCode}`}</span></Link>
+                <Link to={`/staff/${this.state.staffList[0].uniqueCode}`}><span id="staffURL">{`${APIURL}/staff/${this.state.staffList[0].uniqueCode}`}</span></Link></Typography>
             </div>
             </> );
     }

@@ -7,6 +7,8 @@ import Login from './components/Login';
 import StaffCreate from './components/StaffCreate';
 import {Route, Switch} from 'react-router-dom';
 import Admin from './components/Admin';
+import Typography from '@material-ui/core/Typography';
+import SiteFooter from './components/SiteFooter';
 import Reports from './components/Reports';
 
 
@@ -131,23 +133,54 @@ render(){
           token={this.state.sessionToken}
         /> }
       </Route>
-      <Route exact path="/login"><Login 
+      <Route exact path="/login">
+        {this.state.sessionToken == localStorage.getItem('token') ?
+          <Login 
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          token={this.state.sessionToken}
+          /> : <SignUpSplash 
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          token={this.state.sessionToken}
+        />}
+      </Route>
+      <Route exact path="/admin">
+        {this.state.sessionToken == localStorage.getItem('token') ?
+          <Admin 
+          token={this.state.sessionToken}
+          /> : 
+          <SignUpSplash 
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          token={this.state.sessionToken}
+        />}
+      </Route>
+      <Route exact path="/reports">
+        {this.state.sessionToken == localStorage.getItem('token') ?
+        <Reports 
+        token={this.state.sessionToken}
+        /> : <SignUpSplash 
         updateToken={this.updateToken}
         clearToken={this.clearToken}
         token={this.state.sessionToken}
-      /></Route>
-      <Route exact path="/admin"><Admin 
-        token={this.state.sessionToken}
-      /></Route>
-      <Route exact path="/reports"><Reports 
-        token={this.state.sessionToken}
-      /></Route>
-      <Route path="/staff/:uuid"><StaffCreate 
-        updateToken={this.updateToken}
-        clearToken={this.clearToken}
-        token={this.state.sessionToken}
-      /></Route>
+      />}</Route>
+      <Route path="/staff/:uuid">
+        {this.state.sessionToken == localStorage.getItem('token') ?
+          <StaffCreate 
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          token={this.state.sessionToken}
+          /> : <SignUpSplash 
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          token={this.state.sessionToken}
+        />}
+        </Route>
+
       </Switch>
+      
+      {/* <SiteFooter /> */}
       </ThemeProvider>
     </div>
   )
