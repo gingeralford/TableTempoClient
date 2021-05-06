@@ -76,7 +76,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
         }} /><br/>
         <Button variant="contained"  fullWidth={true} color="secondary" id="wideBtn" onClick={this.handleSubmit}>Log In</Button><br/>
       </form>
-      <Typography variant="body2">Don't have an account? You'll need to notify your Restaurant manager to send you a link to Sign up!</Typography>
+      <Typography variant="body2">Don't have an account? You'll need to notify your Restaurant manager to send you a custom link to Sign up!</Typography>
     </div>
   );
 

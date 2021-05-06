@@ -152,26 +152,26 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
             <div >
                 <div className="partyDisplayBox">
                 <form className="partyCreate" onSubmit={this.handleSubmit}>
-                <Grid container className="partyDisplayBoxLine1" style={{justifyContent: "space-between"}}>
-                <Grid item sm={2}>
+                <Grid container style={{justifyContent: "space-between", marginBottom: "12px" }}>
+                <Grid item sm={2} xs={6} className="partyDisplayBoxLine1" >
                     <TextField size="small" variant="outlined" className="partyinputs" type="number" label="# Guests"
                     onChange={(event) => {
                         this.setState({ partyNum: parseInt(event.target.value)})
                     }}/>
                 </Grid>
-                <Grid item sm={3}>
+                <Grid item sm={3} xs={6} className="partyDisplayBoxLine1">
                     <TextField variant="outlined" className="partyinputs" label="Party Name" type="textfield" size="small" 
                     onChange={(event) => {
                         this.setState({ name: event.target.value})
                     }} /><br/>
                 </Grid>
-                <Grid item sm={3}>
+                <Grid item sm={3} xs={7} className="partyDisplayBoxLine1">
                     <TextField size="small" variant="outlined" className="partyinputs" type="textfield" label="telephone #" 
                     onChange={(event) => {
                         this.setState({ telephone: `+1${event.target.value}`})
                     }}/>
                 </Grid>
-                <Grid item sm={2}>
+                <Grid item sm={2} xs={5} className="partyDisplayBoxLine1">
                 <FormControl component="fieldset">
                 <FormGroup aria-label="Over 21" row>
                 <FormControlLabel
@@ -190,8 +190,8 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                     }}
                     /></label> */}
                 </Grid>
-                <Grid item sm={2}>
-                    <TextField size="small" variant="outlined" className="partyinputs" type="number" label="Est Mins til Seated"
+                <Grid item sm={2} xs={12} className="partyDisplayBoxLine1">
+                    <TextField style={{ width: "100%"}}size="small" variant="outlined" className="partyinputs" type="number" label="Est. Mins."
                     onChange={(event) => {
                         this.setState({ timeEstimated: dayjs().add(event.target.value, 'minute')})
                     }}
@@ -205,18 +205,18 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                     />
                 </Grid>
                 </Grid>
-                <Grid container className="partyDisplayBoxLine1" style={{justifyContent: "space-between", alignItems: "end" }}>
-                    <Grid item sm={8}>
+                <Grid container  style={{justifyContent: "space-between", alignItems: "end"}}>
+                    <Grid item sm={8} xs={12} className="partyDisplayBoxLine1">
                     <TextField multiline={true} rows={1} size="small" variant="outlined" className="partyinputs"  label="Notes"
                     onChange={(event) => {
                         this.setState({ specialNotes: event.target.value})
                     }}
                     /></Grid>
-                    <Grid item sm={3}><Typography variant="body1" >Current Time: {dayjs().format('h:mm a')}</Typography>
+                    <Grid item sm={3} xs={9} className="partyDisplayBoxLine1"><Typography variant="body1" ><span className="lineUpBtn" style={{ paddingTop:"12px"}}>Current Time: {dayjs().format('h:mm a')}</span></Typography>
                     </Grid>
-                    <Grid item sm={1} >
+                    <Grid item sm={1}  xs={3} className="partyDisplayBoxLine1">
                     <div style={{ textAlign: "right"}}>
-                    <Button variant="contained" fullWidth={false} color="secondary" id="orangeBtn" type="submit" >Save</Button></div>
+                    <Button variant="contained" className="lineUpBtn" fullWidth={false} color="secondary" id="orangeBtn" type="submit" >Save</Button></div>
                     </Grid>
                 </Grid>
                 </form>

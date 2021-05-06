@@ -320,28 +320,29 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                         {party.seated === true || party.leftUnseated === true ? "partyDisplayBox seatedPartyDisplayBox" : dayjs(party.timeEstimated, 'h:mm a') <= time ? "partyDisplayBox overduePartyDisplayBox" : "partyDisplayBox"} >
                             <b>
                             {/* First Line of Box */}
-                            <Grid container className="partyDisplayBoxLine1" style={{justifyContent: "space-between"}}>
-                                <Grid item sm={2} >
+                            <Grid container  style={{justifyContent: "space-between"}}>
+                                <Grid item sm={2} xs={4} className="partyDisplayBoxLine1">
                                     <span className={party.seated === true || party.leftUnseated === true ? "timeBox seatedTimeBox" : dayjs(party.timeEstimated, 'h:mm a') <= time ? "timeBox overdueTimeBox":"timeBox"}>{dayjs(party.timeEstimated).format('h:mm a')}</span>
                                 </Grid>
-                                <Grid item sm={3}>
-                                    <span>{party.partyNum} - {party.name}</span>
+                                <Grid item sm={3} xs={8} className="partyDisplayBoxLine1">
+                                    <span className="lineUpBtn">{party.partyNum} - {party.name}</span>
                                 </Grid>
                                 {/* <Grid item sm={1}>
                                     <span>{party.partyNum}</span>
                                 </Grid> */}
-                                <Grid item sm={2}>
-                                    <span>arrived: {dayjs(party.timeArrived).format('h:mm a')}</span>
+                                <Grid item sm={2} xs={12} className="partyDisplayBoxLine1">
+                                    <span className="lineUpBtn">arrived: {dayjs(party.timeArrived).format('h:mm a')}</span>
                                 </Grid>
                                 
-                                <Grid item sm={2}>
+                                <Grid item sm={2} xs={6} className="partyDisplayBoxLine1">
                                     <span>{party.over21 === true ? "over 21" : "under 21"}</span>
                                 </Grid>
-                                <Grid item container sm={2} style={{justifyContent: "space-between"}}>
+                                <Grid item container sm={2} xs={6} style={{justifyContent: "space-between"}} className="partyDisplayBoxLine1">
+                                    <span className="lineUpBtn">
+                                    <ExpandMoreIcon color={party.seated  || party.leftUnseated ? "inherit" :  dayjs(party.timeEstimated, 'h:mm a') <= time ? "secondary" : "primary"} fontSize="large" className={party.isExpanded? "lineUpBtn regularArrowBtn" : "lineUpBtn rotateArrowBtn"} 
+                                    onClick={() => this.changeExpandStatus(party, index)}/></span>
 
-                                    <ExpandMoreIcon color={party.seated? "inherit" :"secondary"} fontSize="large" className={party.isExpanded? "regularArrowBtn" : "rotateArrowBtn"} 
-                                    onClick={() => this.changeExpandStatus(party, index)}/>
-                                    <Button variant="contained"  id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
+                                    <Button variant="contained"  className="lineUpBtn" id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
                                         this.seatedUpdate(party)}}>
                                         {party.seated === false ? "Seat" : "Sat"}
                                     </Button>
@@ -349,14 +350,14 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                             </Grid></b>
                             {party.isExpanded ? 
                             
-                            <Grid container className="partyDisplayBoxLine1">
-                                <Grid item sm={6}>
-                                    <span>Notes: <span className="notes">{party.specialNotes}</span></span>
+                            <Grid container  style={{ marginTop: "12px"}}>
+                                <Grid item md={6} sm={4} xs={12} className="partyDisplayBoxLine1">
+                                    <span className="lineUpBtn">Notes: <span className="notes">{party.specialNotes}</span></span>
                                 </Grid>
-                                <Grid item sm={3}>
-                                    <span>{this.formatPhoneNumber(party.telephone)}</span>
+                                <Grid item md={3} sm={3} xs={12} className="partyDisplayBoxLine1">
+                                    <span className="lineUpBtn">{this.formatPhoneNumber(party.telephone)}</span>
                                 </Grid>
-                                <Grid item container sm={3} style={{justifyContent: "space-between"}}>
+                                <Grid item container md={3} sm={5} xs={12} style={{justifyContent: "space-between"}} className="partyDisplayBoxLine1">
                                     <Grid item>
                                     <Button variant="contained"  fullWidth={false}  id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} 
                                     onClick={() => this.changeEditStatus(party, index)}

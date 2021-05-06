@@ -7,8 +7,8 @@ import Login from './components/Login';
 import StaffCreate from './components/StaffCreate';
 import {Route, Switch} from 'react-router-dom';
 import Admin from './components/Admin';
-import Typography from '@material-ui/core/Typography';
-import SiteFooter from './components/SiteFooter';
+// import Typography from '@material-ui/core/Typography';
+// import SiteFooter from './components/SiteFooter';
 import Reports from './components/Reports';
 
 

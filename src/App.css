@@ -101,11 +101,13 @@ html, body {
   margin: 10px auto;
   padding: 12px;
   align-self: center;
+  align-items: center;
   font-weight: 700;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   text-align:left;
   color: white;
   font-family: 'Raleway', sans-serif;
+  height: auto;
 }
 
 .seatedPartyDisplayBox {
@@ -118,8 +120,10 @@ html, body {
 }
 
 .partyDisplayBoxLine1 {
-  /* padding: 6px; */
+  /* margin-top: 12px;
+  margin-bottom: 12px; */
   line-height: 6vh;
+  height: 6vh;
   justify-content: space-between;
   vertical-align: middle;
 }
@@ -134,16 +138,25 @@ html, body {
   text-align:left;
   align-self: center;
   justify-self: center;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
 }
 
 .seatedTimeBox {
   background-color: #FFF3C2;
   color: #707070;
-
 }
 
 .overdueTimeBox {
   color: #9a423b;
+}
+
+.lineUpBtn {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+
 }
 
 #orangeBtn {
@@ -175,8 +188,8 @@ html, body {
 #seatedBtn {
   background-color: #FFF3C2;
   color: #707070;
-  align-self: center;
-  justify-self: center;
+  /* align-self: center;
+  justify-self: center; */
   font-weight: 700;
   font-size: 1em;
   border: 1px solid #707070;
@@ -242,3 +255,4 @@ html, body {
 #admin a {
   color:#007CBE;
 }
+
