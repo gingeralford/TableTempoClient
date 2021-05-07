@@ -205,18 +205,18 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                     />
                 </Grid>
                 </Grid>
-                <Grid container  style={{justifyContent: "space-between", alignItems: "end"}}>
-                    <Grid item sm={8} xs={12} className="partyDisplayBoxLine1">
-                    <TextField multiline={true} rows={1} size="small" variant="outlined" className="partyinputs"  label="Notes"
+                <Grid container  style={{justifyContent: "space-between"}}>
+                    <Grid item md={8} sm={7} xs={12} style={{ flexShrink: 3}}className="partyDisplayBoxLine1">
+                    <TextField multiline={true} rows={1} size="small" variant="outlined"  className="partyinputs"  label="Notes"
                     onChange={(event) => {
                         this.setState({ specialNotes: event.target.value})
                     }}
                     /></Grid>
-                    <Grid item sm={3} xs={9} className="partyDisplayBoxLine1"><Typography variant="body1" ><span className="lineUpBtn" style={{ paddingTop:"12px"}}>Current Time: {dayjs().format('h:mm a')}</span></Typography>
+                    <Grid item md={3} sm={3} xs={9} className="partyDisplayBoxLine1"><Typography variant="body1" ><span className="lineUpBtn" style={{ paddingTop:"12px"}}>Current Time: {dayjs().format('h:mm a')}</span></Typography>
                     </Grid>
-                    <Grid item sm={1}  xs={3} className="partyDisplayBoxLine1">
-                    <div style={{ textAlign: "right"}}>
-                    <Button variant="contained" className="lineUpBtn" fullWidth={false} color="secondary" id="orangeBtn" type="submit" >Save</Button></div>
+                    <Grid item md={1} sm={2}  xs={3} className="partyDisplayBoxLine1" style={{ textAlign: "right"}}>
+                    
+                    <Button variant="contained" className="lineUpBtn" fullWidth={false} color="secondary" id="orangeBtn" type="submit" >Save</Button>
                     </Grid>
                 </Grid>
                 </form>

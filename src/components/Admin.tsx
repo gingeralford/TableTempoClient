@@ -6,6 +6,9 @@ import {Link} from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 var dayjs = require('dayjs');
 
 export interface AdminProps {
@@ -16,7 +19,10 @@ export interface AdminState {
     loading: boolean,
     admin: boolean,
     active: boolean,
-    staffList: staffPlusLocalVars[]
+    staffList: staffPlusLocalVars[],
+    resName: string,
+    resEmail: string,
+    uniqueCode: string
 }
 
 type localVars = {
@@ -60,7 +66,10 @@ class Admin extends React.Component<AdminProps, AdminState> {
             loading: true,
             admin: false,
             active: false,
-            staffList: [...staffPlaceholder]
+            staffList: [...staffPlaceholder],
+            resName: "",
+            resEmail: "",
+            uniqueCode: ""
           };
     }
 
@@ -78,6 +87,7 @@ class Admin extends React.Component<AdminProps, AdminState> {
 
     componentDidMount() {
         this.fetchStaff();
+        // this.fetchRestaurant();
     }
 
     changeEditStatus = (staff: staffMember, index: number) => {
@@ -85,6 +95,25 @@ class Admin extends React.Component<AdminProps, AdminState> {
         this.state.staffList.map((staff, i) => (index === i) ? {...staff, isEditing: !staff.isEditing }: staff) })
         // console.log("edit function",this.state.parties)
     }
+
+    fetchRestaurant = () => {
+        let uuid= this.state.staffList[0].uniqueCode
+        fetch(`${APIURL}/restaurant/lookup/${uuid}`, {
+            method: "GET",
+            headers: new Headers({
+                "Content-Type": "application/json",
+            }),
+        })
+            .then((response) => response.json())
+            .then((restaurant) => {
+                // console.log(restaurant)
+                this.setState({ resName: restaurant.restaurantName})
+                this.setState({ resEmail: restaurant.email})
+                console.log(restaurant)
+                // console.log('Got Name');
+            })
+            .catch((err) => console.log(err));
+        }
 
     fetchStaff = () => {
         this.setState({ loading: true})
@@ -98,9 +127,9 @@ class Admin extends React.Component<AdminProps, AdminState> {
           })
             .then((res) => res.json())
             .then((staff) => {
-              this.setState({ loading: false})
+              this.setState({ loading: false })
               console.log(staff)
-              this.setState({ staffList: staff})
+              this.setState({ staffList: staff }, () => {this.fetchRestaurant()})
             //   console.log("state array",this.state.parties);
             })
             .catch((err) => console.log(err));
@@ -135,8 +164,9 @@ class Admin extends React.Component<AdminProps, AdminState> {
                 {this.state.staffList.map((staff, index) => {
                     return (
                         <div key={index}>
-                        {staff.isEditing ? 
+                        {staff.email !== this.state.resEmail && staff.isEditing ? 
                         <EditStaff 
+                            resEmail={this.state.resEmail}
                             index={index}
                             staff={staff} 
                             removeNulls={this.removeNulls} 
@@ -146,7 +176,7 @@ class Admin extends React.Component<AdminProps, AdminState> {
                             /> :
                         <p><Typography variant="body2">  
                         <span>{staff.email}</span><br/>
-                        <span>signed up: {dayjs(staff.createdAt).format('MM/DD/YYYY')}</span>
+                        <span>signed up: {dayjs(staff.createdAt).format('MM/DD/YYYY')}</span><p></p>
                         <p>
                         <FormControlLabel 
                             control={<Checkbox color="secondary" checked={staff.admin ? true : false} disabled={true}/>}
@@ -157,18 +187,25 @@ class Admin extends React.Component<AdminProps, AdminState> {
                             control={<Checkbox color="secondary" checked={staff.active ? true : false} disabled={true}/>}
                             label={<Typography variant="body2" style={{ fontSize: "14px"}}>Active</Typography>}
                             labelPlacement="start"
-                            /></p>
+                            />
+                        </p>
+                        {staff.email !== this.state.resEmail ? 
                         <p> 
                         <Button variant="contained" color="secondary" onClick={() => this.changeEditStatus(staff, index)}>Edit</Button></p>
-                        {/* <p> 
-                        <Button variant="contained" color="secondary" onClick={() => this.deleteStaff(staff)}>Delete</Button></p> */}
+                        : <span>To protect your access to Table Tempo the primary restaurant account permissions cannot be changed.</span> }
                         <hr/>
                         </Typography>
-                    </p> }</div>
+                    </p>}</div>
                     )
                 })}
                 <h2><Typography variant="h2">Add New Staff</Typography></h2>
                 <Typography variant="body2"><p>Send your employees the following link to create their account and password. The link is custom to your account and will automatically link them to this restaurant.</p>
+                <Tooltip title="copy to clipboard">
+                    <IconButton aria-label="copy to clipboard">
+                        <FileCopyIcon color="secondary" onClick={() =>  navigator.clipboard.writeText(`${APIURL}/staff/${this.state.staffList[0].uniqueCode}`)}/>
+                    </IconButton>
+                </Tooltip>
+                
 
                 <Link to={`/staff/${this.state.staffList[0].uniqueCode}`}><span id="staffURL">{`${APIURL}/staff/${this.state.staffList[0].uniqueCode}`}</span></Link></Typography>
             </div>

@@ -91,6 +91,7 @@ export interface IParty {
 }
  
 class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState> {
+    intervalID:  number = 0;
     constructor(props: PartyDisplayProps) {
         super(props);
         const partyPlaceholder = this.props.parties.map((party) => {
@@ -113,8 +114,7 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                     isExpanded: false
                 }
         })
-
-        this.state = {  
+        this.state = {
             isEditable: false,
             isExpanded: false,
             name: "",
@@ -132,31 +132,20 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
             parties: [...partyPlaceholder]
          };
     }
-    // componentDidMount() {
-        
-        // const partyPlaceholder = this.props.parties.map((party) => {
-        //     return {
-        //             id: party.id,
-        //             name: party.name,
-        //             partyNum: party.partyNum,
-        //             telephone: party.telephone,
-        //             over21: party.over21,
-        //             timeEstimated: party.timeEstimated,
-        //             timeSeated: party.timeSeated,
-        //             seated: party.seated,
-        //             leftUnseated: party.leftUnseated,
-        //             specialNotes: party.specialNotes,
-        //             staffId: party.staffId,
-        //             restaurantId: party.restaurantId,
-        //             uniqueCode: party.uniqueCode,
-        //             timeArrived: party.timeArrived,
-        //             isEditing: false,
-        //             isExpanded: false
-        //         }
-        // })
 
-        // this.setState({ parties:[...partyPlaceholder]});
-    // }
+    startTimer = () => {
+        this.intervalID = setInterval(this.props.fetchParties, 30000);
+        console.log('timer started')
+    }
+    
+    componentDidMount() {
+    this.startTimer()
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalID)
+        console.log("clear interval")
+    }
 
     //makes nulls undefined for token
     removeNulls =(obj: any) => {
@@ -170,37 +159,6 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
         }
         return obj;
     }
-
-    // updateParty = (e: React.FormEvent, party: IParty) => {
-    //     e.preventDefault();
-    //     console.log(`updating ${party.id}`);
-    //     console.log(party)
-    //     fetch(`${APIURL}/party/update/${party.id}`, 
-    //     {
-    //         body: JSON.stringify({ party: { 
-    //             name: party.name, 
-    //             partyNum: party.partyNum,
-    //             telephone: party.telephone,
-    //             over21: party.over21,
-    //             // timeEstimated: party.timeEstimated,
-    //             timeSeated: party.timeSeated,
-    //             seated: party.seated,
-    //             leftUnseated: party.leftUnseated,
-    //             specialNotes: party.specialNotes,
-    //          } }),
-    //         method: "PUT",
-    //         headers: new Headers({
-    //           "Content-Type": "application/json",
-    //           Authorization: this.removeNulls(localStorage.getItem('token'))
-    //         }),
-    //       })
-    //         .then((res) => res.json())
-    //         .then((res) => {
-    //             console.log('Party Updated')
-    //             this.props.fetchParties();
-    //         })
-    //         .catch((err) => console.log(err));
-    // }
 
     //toggles seated true/false, submits to db and re-renders 
     seatedUpdate = (party: IParty) => {
@@ -286,10 +244,9 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
         this.setState({ name: event.target.value})
     }
 
-    //TODO: Try building similar components but with inputs
     render() { 
-        console.log("props",this.props.parties)
-        console.log("state",this.state.parties);
+        console.log("props",this.props.parties);
+        // console.log("state",this.state.parties);
         let time = dayjs();
         return ( 
             <div style={{ paddingBottom: "30px"}}>
@@ -342,7 +299,7 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                                     <ExpandMoreIcon color={party.seated  || party.leftUnseated ? "inherit" :  dayjs(party.timeEstimated, 'h:mm a') <= time ? "secondary" : "primary"} fontSize="large" className={party.isExpanded? "lineUpBtn regularArrowBtn" : "lineUpBtn rotateArrowBtn"} 
                                     onClick={() => this.changeExpandStatus(party, index)}/></span>
 
-                                    <Button variant="contained"  className="lineUpBtn" id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
+                                    <Button variant="contained"   id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
                                         this.seatedUpdate(party)}}>
                                         {party.seated === false ? "Seat" : "Sat"}
                                     </Button>
