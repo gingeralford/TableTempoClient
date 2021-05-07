@@ -25,7 +25,8 @@ export interface EditStaffProps {
     removeNulls: Function,
     fetchStaff: Function,
     changeEditStatus: Function,
-    deleteStaff: Function
+    deleteStaff: Function,
+    resEmail: string
 }
  
 export interface EditStaffState {
@@ -157,7 +158,7 @@ class EditStaff extends React.Component<EditStaffProps, EditStaffState> {
                         <FormControlLabel 
                             control={<Checkbox color="secondary" checked={this.state.admin ? true : false} onChange={(event) => {
                                 this.setState({ admin: event.target.checked}, () => console.log(this.state.admin))
-                            }}/>}
+                            }}/>} 
                             label={<Typography variant="body2" style={{ fontSize: "14px"}}>Admin</Typography>}
                             labelPlacement="start"
                             /><br/>
@@ -168,7 +169,7 @@ class EditStaff extends React.Component<EditStaffProps, EditStaffState> {
                             label={<Typography variant="body2" style={{ fontSize: "14px"}}>Active</Typography>}
                             labelPlacement="start"
                             /></p>
-                        <p> <Button variant="contained" color="secondary" onClick={() => this.props.changeEditStatus(this.props.staff, this.props.index)}>Cancel</Button></p>    
+                        {/* <p> <Button variant="contained" color="secondary" onClick={() => this.props.changeEditStatus(this.props.staff, this.props.index)}>Cancel</Button></p>     */}
                         <p> <Button variant="contained" color="secondary" type="submit" >Save</Button></p>
                         <p> <Button variant="contained" id="delete" onClick={() => this.props.deleteStaff(this.props.staff)}>Delete</Button></p>
                         
