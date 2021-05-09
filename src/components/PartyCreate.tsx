@@ -154,19 +154,19 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                 <form className="partyCreate" onSubmit={this.handleSubmit}>
                 <Grid container style={{justifyContent: "space-between" }}>
                 <Grid item sm={2} xs={6} className="partyDisplayBoxLine1" >
-                    <TextField margin="none" size="small" variant="outlined" className="partyinputs" type="number" label="# Guests"
+                    <TextField margin="none" size="small" variant="outlined" className="partyinputs" type="number" inputProps={{ maxLength: 2}}label="# Guests"
                     onChange={(event) => {
                         this.setState({ partyNum: parseInt(event.target.value)})
                     }}/>
                 </Grid>
                 <Grid item sm={3} xs={6} className="partyDisplayBoxLine1">
-                    <TextField margin="none" variant="outlined" className="partyinputs" label="Party Name" type="textfield" size="small" 
+                    <TextField margin="none" variant="outlined" className="partyinputs" label="Party Name" type="textfield" size="small" inputProps={{ maxLength: 40 }}
                     onChange={(event) => {
                         this.setState({ name: event.target.value})
                     }} /><br/>
                 </Grid>
                 <Grid item sm={3} xs={12} className="partyDisplayBoxLine1">
-                    <TextField size="small" variant="outlined" className="partyinputs" type="textfield" label="telephone #" 
+                    <TextField size="small" variant="outlined" className="partyinputs" inputProps={{ maxLength: 10 }} type="textfield" label="telephone #" 
                     onChange={(event) => {
                         this.setState({ telephone: `+1${event.target.value}`})
                     }}/>
@@ -191,7 +191,7 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                     /></label> */}
                 </Grid>
                 <Grid item sm={2} xs={6} className="partyDisplayBoxLine1">
-                    <TextField style={{ width: "100%"}}size="small" variant="outlined" className="partyinputs" type="number" label="Est. Mins."
+                    <TextField style={{ width: "100%"}}size="small" variant="outlined" className="partyinputs" type="number" label="Est. Mins." inputProps={{ maxLength: 3 }}
                     onChange={(event) => {
                         this.setState({ timeEstimated: dayjs().add(event.target.value, 'minute')})
                     }}
@@ -207,7 +207,7 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                 </Grid>
                 <Grid container  style={{justifyContent: "space-between"}}>
                     <Grid item md={8} sm={7} xs={12} style={{ flexShrink: 3}}className="partyDisplayBoxLine1">
-                    <TextField multiline={true} rows={1} size="small" variant="outlined"  className="partyinputs"  label="Notes"
+                    <TextField multiline={true} rows={1} size="small" variant="outlined"  className="partyinputs"  label="Notes" inputProps={{ maxLength: 140 }}
                     onChange={(event) => {
                         this.setState({ specialNotes: event.target.value})
                     }}

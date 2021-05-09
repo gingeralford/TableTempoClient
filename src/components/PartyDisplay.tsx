@@ -299,7 +299,7 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                                     <ExpandMoreIcon color={party.seated  || party.leftUnseated ? "inherit" :  dayjs(party.timeEstimated, 'h:mm a') <= time ? "secondary" : "primary"} fontSize="large" className={party.isExpanded? "lineUpBtn regularArrowBtn" : "lineUpBtn rotateArrowBtn"} 
                                     onClick={() => this.changeExpandStatus(party, index)}/></span>
 
-                                    <Button variant="contained"   id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
+                                    <Button variant="contained"  className="lineUpBtn" id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
                                         this.seatedUpdate(party)}}>
                                         {party.seated === false ? "Seat" : "Sat"}
                                     </Button>

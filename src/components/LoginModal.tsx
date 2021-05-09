@@ -68,10 +68,10 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
   body: JSX.Element = (
     <div  className="loginModal">
       <form className="signUpForm">
-        <TextField className="signUpFields" required variant="filled"  label="Email Address" onChange={(event) => {
+        <TextField className="signUpFields" required variant="filled"  label="Email Address" inputProps={{ maxLength: 254 }}onChange={(event) => {
                 this.setState({ email: event.target.value})
             }} /><br/>
-        <TextField className="signUpFields" required variant="filled" label="Password" type="password" onChange={(event) => {
+        <TextField className="signUpFields" required variant="filled" label="Password" type="password" inputProps={{ maxLength: 100 }} onChange={(event) => {
             this.setState({ password: event.target.value})
         }} /><br/>
         <Button variant="contained"  fullWidth={true} color="secondary" id="wideBtn" onClick={this.handleSubmit}>Log In</Button><br/>

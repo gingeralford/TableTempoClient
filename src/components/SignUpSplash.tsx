@@ -110,13 +110,13 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
                         <Box  mx="auto" padding="0" maxWidth="440px">
                             <Box>
                             <form className="">
-                            <TextField className="signUpFields" required variant="filled"  label="Restaurant Name" onChange={(event) => {
+                            <TextField className="signUpFields" required variant="filled"  label="Restaurant Name" inputProps={{ maxLength: 254 }}onChange={(event) => {
                                     this.setState({ restaurantName: event.target.value})
                                 }} /><br/>
-                            <TextField className="signUpFields" required variant="filled"  label="Email Address" onChange={(event) => {
+                            <TextField className="signUpFields" required variant="filled"  label="Email Address" inputProps={{ maxLength: 254 }}onChange={(event) => {
                                     this.setState({ email: event.target.value})
                                 }} /><br/>
-                            <TextField className="signUpFields" required variant="filled" label="Password" type="password" onChange={(event) => {
+                            <TextField className="signUpFields" required variant="filled" label="Password" type="password" inputProps={{ maxLength: 100 }}onChange={(event) => {
                                     this.setState({ password: event.target.value})
                                 }} /><br/>
                             <Button variant="contained"  fullWidth={true} color="secondary" id="wideBtn" onClick={this.handleSubmit}>Sign Up Now</Button><br/>
