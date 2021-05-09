@@ -88,7 +88,15 @@ function LeftDrawer(props:ILeftDrawer) {
           classes={classes}
           >
           <div id="drawerInside">
-
+          <Link to='/' className="sidebarLinks">
+            <List>
+              <ListItem button key='Waitlist'>
+                <ListItemIcon><LineStyleIcon color="primary"/>
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="body2">Waitlist</Typography>} />
+              </ListItem>
+            </List>
+          </Link>
           {/* Only shows link to /admin if admin=true */}
           {localStorage.getItem('admin') === "true" ? 
           <Link to='/admin' className="sidebarLinks" >
@@ -103,23 +111,15 @@ function LeftDrawer(props:ILeftDrawer) {
           : "" }
           
           <Link to='/reports' className="sidebarLinks">
-          <List>
-            <ListItem button key='Reports'>
-              <ListItemIcon><AssessmentIcon color="primary"/>
-              </ListItemIcon>
-              <ListItemText primary={<Typography variant="body2">Reports</Typography>} />
-            </ListItem>
+            <List>
+              <ListItem button key='Reports'>
+                <ListItemIcon><AssessmentIcon color="primary"/>
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="body2">Reports</Typography>} />
+              </ListItem>
             </List>
           </Link>
-          <Link to='/' className="sidebarLinks">
-          <List>
-            <ListItem button key='Dashboard'>
-              <ListItemIcon><LineStyleIcon color="primary"/>
-              </ListItemIcon>
-              <ListItemText primary={<Typography variant="body2">Dashboard</Typography>} />
-            </ListItem>
-            </List>
-            </Link>
+          
             <Divider />
             <List>
             <ListItem key='Copyright'>

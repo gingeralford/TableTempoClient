@@ -166,7 +166,8 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
         party.seated === false ? seated = true : seated = false;
         fetch(`${APIURL}/party/update/${party.id}`, {
             body: JSON.stringify({ party: { 
-                seated: seated
+                seated: seated,
+                timeSeated: new dayjs()
              } }),
             method: "PUT",
             headers: new Headers({
@@ -198,7 +199,9 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
         party.leftUnseated === false ? left = true : left = false;
         fetch(`${APIURL}/party/update/${party.id}`, {
             body: JSON.stringify({ party: { 
-                leftUnseated: left
+                leftUnseated: left,
+                seated: true,
+                timeSeated: new dayjs()
              } }),
             method: "PUT",
             headers: new Headers({

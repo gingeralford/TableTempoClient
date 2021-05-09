@@ -4,6 +4,7 @@ import { Typography } from '@material-ui/core';
 import { addDays } from 'date-fns';
 import APIURL from "../helpers/environment";
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import "react-datepicker/dist/react-datepicker.css";
 var dayjs = require('dayjs');
 
@@ -15,6 +16,7 @@ export interface ReportsProps {
 export interface ReportsState {
     startDate: any,
     endDate: any,
+    name: string,
     loading: boolean,
     parties: {
         id: number,
@@ -40,6 +42,7 @@ class Reports extends React.Component<ReportsProps, ReportsState> {
         this.state = { 
             startDate: new Date(),
             endDate: new Date(),
+            name: "",
             loading: true,
             parties: [{
                 id: 0,
@@ -59,35 +62,20 @@ class Reports extends React.Component<ReportsProps, ReportsState> {
             }]
           };
     }
-//Probably can remove
-    // onChange= (dates: any) => 
-    //     { const [start, end] = dates;
-    //         this.setState({ startDate: start});
-    //         this.setState({ endDate: end})
-    //     }
+
 
     daypick = () => {
         return (
             <>
-            <div>
-                <DatePicker placeholderText="start date" selected={this.state.startDate} onChange={(date) => this.setState({ startDate: date})} startDate={this.state.startDate} /></div>
-            <div>
-                <DatePicker placeholderText="end date" selected={this.state.endDate} onChange={(date) => this.setState({ endDate: date})} endDate={this.state.endDate} maxDate={addDays(this.state.startDate, 30)}/>
+            <div className="daypick">
+                <DatePicker className="daypickInput" placeholderText="start date" selected={this.state.startDate} onChange={(date) => this.setState({ startDate: date})} startDate={this.state.startDate} /></div>
+            <div className="daypick">
+                <DatePicker className="daypickInput" placeholderText="end date" selected={this.state.endDate} onChange={(date) => this.setState({ endDate: date})} endDate={this.state.endDate} maxDate={addDays(this.state.startDate, 30)}/>
             </div>
           </>
         );
       };
     
-    // ExampleCustomInput = React.forwardRef<HTMLInputElement>(
-    //     ({ value, onClick }, ref) => (
-    //       <button className="example-custom-input" onClick={onClick} ref={ref}>
-    //         {value}
-    //       </button>
-    //     ),
-    //   );
-    // DatePickerInput = ({ onClick, ...props }) => (
-    //     <div onClick={onClick}></div>
-    // );
 
     removeNulls =(obj: any) => {
     if (obj === null) {
@@ -103,23 +91,28 @@ class Reports extends React.Component<ReportsProps, ReportsState> {
 
     makeStart5am = (startTime: Date) => {
             startTime.setHours(5,0,1)
-            console.log("5am start time", startTime)
-        };
-    
+            // console.log("5am start time", startTime)
+    };
 
     makeEnd5am = (endTime: Date) => {
             endTime.setHours(5,0,1);
             endTime.setDate(endTime.getDate() + 1);
-            console.log("5am end time",endTime)
-        };
-    
+            // console.log("5am end time",endTime)
+    };
+
+    formatPhoneNumber = (phoneNumberString: string) => {
+        phoneNumberString = phoneNumberString.trim();
+        let newNumber: string = phoneNumberString.slice(2,5)+ '-' +phoneNumberString.slice(6,9)+'-'+phoneNumberString.slice(7,11)
+        return newNumber;
+    }
 
     fetchPartyRange = () => {
     this.setState({ startDate: this.makeStart5am(this.state.startDate)})
     this.setState({ endDate: this.makeEnd5am(this.state.endDate)})
-    // console.log("start",this.state.startDate)
-    // console.log("end",this.state.endDate)
+    console.log("start",this.state.startDate)
+    console.log("end",this.state.endDate)
     this.setState({ loading: true})
+    console.log(`${APIURL}/party/daterange/?endDate=${this.state.endDate.toISOString()}&startDate=${this.state.startDate.toISOString()}`)
     fetch(`${APIURL}/party/daterange/?endDate=${this.state.endDate.toISOString()}&startDate=${this.state.startDate.toISOString()}`, {
         method: "GET",
         headers: new Headers({
@@ -130,12 +123,37 @@ class Reports extends React.Component<ReportsProps, ReportsState> {
         })
         .then((res) => res.json())
         .then((parties) => {
-            this.setState({ parties: parties})
+            if(parties.length > 0) {
+                this.setState({ parties: parties})
+            }
             this.setState({ loading: false})
         //   console.log("state array",this.state.parties);
         })
         .catch((err) => console.log(err));
     };
+
+    fetchByName = () => {
+        let trimmedName = this.state.name.trim()
+        this.setState({ name: trimmedName})
+        this.setState({ loading: true})
+        fetch(`${APIURL}/party/byname/?name=${this.state.name}`, {
+            method: "GET",
+            headers: new Headers({
+                "Content-Type": "application/json",
+                Authorization: this.removeNulls(localStorage.getItem('token'))
+            }),
+            
+            })
+            .then((res) => res.json())
+            .then((parties) => {
+                if(parties.length > 0) {
+                    this.setState({ parties: parties})
+                }
+                this.setState({ loading: false})
+            //   console.log("state array",this.state.parties);
+            })
+            .catch((err) => console.log(err));
+        };
 
     render() { 
         return ( 
@@ -146,14 +164,46 @@ class Reports extends React.Component<ReportsProps, ReportsState> {
                     <Typography variant="body2">
                         <p>
                         {this.daypick()}
-                        {this.state.startDate !== undefined && this.state.endDate !== undefined ? 
-                        <Button id="orangeBtn" onClick={() => this.fetchPartyRange()}>Get Parties</Button> : ""}
+                        {this.state.startDate !== 0 && this.state.endDate !== undefined ? 
+                        <Button id="orangeBtn" className="fullBtn" variant="contained" onClick={() => this.fetchPartyRange()}>Search by Dates</Button> : <Button className="fullBtn" variant="contained" id="orangeBtn" disabled >Search by Dates</Button>}
                         </p>
-                        {this.state.parties[0].id !== 0  ? this.state.parties.map((party, index ) => {   
+                        <p><input className="daypickInput" placeholder="Party Name" type="textfield"  maxLength={40} onChange={(event) => {
+                        this.setState({ name: event.target.value})
+                        }} /><br/></p>
+                        <p><Button id="orangeBtn" className="fullBtn" variant="contained" onClick={() => this.fetchByName()}>Search by Name</Button ></p>
+                        <div id="tableOverflow">
+                            <table id="reportTable">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>#</th>
+                                <th>Phone #</th>
+                                <th>Arrived</th>
+                                <th>Est. Wait</th>
+                                <th>Actual Wait</th>
+                                <th>Left?</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.state.parties[0].id !== 0  ?
+                            this.state.parties.map((party, index ) => {   
+                                let timeArrived = dayjs(party.timeArrived)
+                                let timeSeated = dayjs(party.timeSeated)
+                                let timeEstimated = dayjs(party.timeEstimated)
                             return(
-                            <div key={index}>
-                                <span>{party.name}</span> <span>{dayjs(party.timeArrived).format('MM/DD/YYYY h:mm a')}</span>
-                            </div>)}): ""}
+                            <tr key={index}>
+                                <td>{dayjs(party.timeArrived).format('MM/DD/YY')}</td>
+                                <td>{party.name}</td> 
+                                <td>{party.partyNum}</td>
+                                <td>{this.formatPhoneNumber(party.telephone)}</td>
+                                <td>{dayjs(party.timeArrived).format('hh:mm a')}</td>
+                                <td>{timeEstimated.diff(timeArrived, 'minute') +1} mins</td>
+                                <td>{party.seated ? timeSeated.diff(timeArrived, 'minute')+" mins": "pending"} </td>
+                                <td className={party.leftUnseated ? "unseatedParty": ""} >{party.leftUnseated ? "yes" : "no"}</td>
+                            </tr>)}): ""}
+                            </tbody>
+                            </table></div>
                     </Typography>
                 </div>
             </> );
