@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core';
 import { addDays } from 'date-fns';
 import APIURL from "../helpers/environment";
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 import "react-datepicker/dist/react-datepicker.css";
 var dayjs = require('dayjs');
 
@@ -90,19 +90,19 @@ class Reports extends React.Component<ReportsProps, ReportsState> {
     }
 
     makeStart5am = (startTime: Date) => {
-            startTime.setHours(5,0,1)
+            startTime.setHours(0,0,1)
             // console.log("5am start time", startTime)
     };
 
     makeEnd5am = (endTime: Date) => {
-            endTime.setHours(5,0,1);
+            endTime.setHours(0,0,1);
             endTime.setDate(endTime.getDate() + 1);
             // console.log("5am end time",endTime)
     };
 
     formatPhoneNumber = (phoneNumberString: string) => {
         phoneNumberString = phoneNumberString.trim();
-        let newNumber: string = phoneNumberString.slice(2,5)+ '-' +phoneNumberString.slice(6,9)+'-'+phoneNumberString.slice(7,11)
+        let newNumber: string = phoneNumberString.slice(2,5)+ '-' +phoneNumberString.slice(5,8)+'-'+phoneNumberString.slice(8,12)
         return newNumber;
     }
 
@@ -160,7 +160,7 @@ class Reports extends React.Component<ReportsProps, ReportsState> {
             <>
                 <div style={{backgroundColor: '#FFF3C2', position: 'fixed', top: "0px", left: '0px', minHeight: '100vh', width: '100%', }} ></div>
                 <div id="admin">
-                    <h2><Typography variant="h2">View Parties by Date</Typography></h2>
+                    <h2><Typography variant="h2">View Parties</Typography></h2>
                     <Typography variant="body2">
                         <p>
                         {this.daypick()}

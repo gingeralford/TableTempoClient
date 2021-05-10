@@ -31,8 +31,9 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
           };
     }
 
-    handleSubmit = (event : any) => {
-        event.preventDefault();
+    //add event to parameters if event needed.
+    handleSubmit = () => {
+        // event.preventDefault();
         console.log(this.state.email);
         fetch(`${APIURL}/staff/login`, {
             method: "POST",

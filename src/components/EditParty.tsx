@@ -247,7 +247,7 @@ class EditParty extends React.Component<EditPartyProps, EditPartyState> {
                                     }}/> */}
                                 </Grid>
                                 <Grid item sm={3} xs={12} className="partyDisplayBoxLine1">
-                                    <TextField size="small" variant="outlined" className="partyinputs" value={this.state.telephone.slice(2,12)} type="textfield" label="telephone #" inputProps={{ maxLength: 10 }}
+                                    <TextField size="small" variant="outlined" className="partyinputs" value={this.state.telephone.slice(2,13)} type="textfield" label="telephone #" inputProps={{ maxLength: 10 }}
                                     onChange={(event) => {
                                         this.setState({ telephone: `+1${event.target.value}`})
                                     }}/>

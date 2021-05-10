@@ -25,8 +25,10 @@ export interface StaffCreateState {
     password: string,
     token: string | null,
     resName: string,
+    resId: number,
     restaurant: {
         restaurantName: string,
+        restaurantId: number
     }
 }
  
@@ -38,8 +40,10 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
             password: "",
             token: "",
             resName: "",
+            resId: 0,
             restaurant: {
                 restaurantName: "",
+                restaurantId: 0
             }
          };
     }
@@ -56,6 +60,7 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
             .then((restaurant) => {
                 // console.log(restaurant)
                 this.setState({ resName: restaurant.restaurantName})
+                this.setState({ resId: restaurant.id})
                 // console.log('Got Name');
             })
             .catch((err) => console.log(err));
@@ -66,8 +71,8 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
     }
     
 
-    handleSubmit = (event : any) => {
-        event.preventDefault();
+    handleSubmit = () => {
+        // event.preventDefault();
         const uuid = this.props.match.params.uuid;
         console.log(this.state.email);
         //CREATES STAFF
@@ -76,6 +81,7 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
             body: JSON.stringify({ staff: { 
                 email: this.state.email, 
                 password: this.state.password,
+                restaurantId: this.state.resId,
                 active: false,
                 admin: false
              } }),
