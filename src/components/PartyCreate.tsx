@@ -9,8 +9,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
-
-// import { tokenToString } from 'typescript';
 var dayjs = require('dayjs');
 
 export interface PartyCreateProps {
@@ -114,9 +112,9 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
     //     })
     // }
 
-    handleSubmit = () => {
+    handleSubmit = (event: any) => {
         
-        // event.preventDefault();
+        event.preventDefault();
         //CREATES RESTAURANT ENTRY
         fetch(`${APIURL}/party/create`, {
             method: "POST",
