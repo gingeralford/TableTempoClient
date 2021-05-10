@@ -87,7 +87,6 @@ class Admin extends React.Component<AdminProps, AdminState> {
 
     componentDidMount() {
         this.fetchRestaurant();
-        // this.fetchRestaurant();
     }
 
     changeEditStatus = (staff: staffMember, index: number) => {
