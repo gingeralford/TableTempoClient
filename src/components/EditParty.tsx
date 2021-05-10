@@ -226,7 +226,7 @@ class EditParty extends React.Component<EditPartyProps, EditPartyState> {
                                     <span className={this.state.seated === true || this.state.leftUnseated === true ? "timeBox seatedTimeBox" : dayjs(this.state.timeEstimated, 'h:mm a') <= time ? "timeBox overdueTimeBox":"timeBox"}>{dayjs(this.state.timeEstimated).format('h:mm a')}</span>
                                 </Grid>
                                 <Grid item sm={1} xs={3} className="partyDisplayBoxLine1">
-                                    <TextField margin="none" size="small" variant="outlined" value={this.state.partyNum} className="partyinputs" type="number" label="# Guests"
+                                    <TextField margin="none" size="small" variant="outlined" value={this.state.partyNum} className="partyinputs" type="number" label="# Guests" inputProps={{ maxLength: 2 }}
                                     onChange={(event) => {
                                         this.setState({ partyNum: parseInt(event.target.value)})
                                     }}/>
@@ -237,7 +237,7 @@ class EditParty extends React.Component<EditPartyProps, EditPartyState> {
                                     /> */}
                                 </Grid>
                                 <Grid item sm={3} xs={5} className="partyDisplayBoxLine1">
-                                    <TextField margin="none" variant="outlined" value={this.state.name} className="partyinputs" label="Party Name" type="textfield" size="small" 
+                                    <TextField margin="none" variant="outlined" value={this.state.name} className="partyinputs" label="Party Name" type="textfield" size="small" inputProps={{ maxLength: 40 }}
                                     onChange={(event) => {
                                         this.setState({ name: event.target.value})
                                     }} /><br/>
@@ -247,7 +247,7 @@ class EditParty extends React.Component<EditPartyProps, EditPartyState> {
                                     }}/> */}
                                 </Grid>
                                 <Grid item sm={3} xs={12} className="partyDisplayBoxLine1">
-                                    <TextField size="small" variant="outlined" className="partyinputs" value={this.state.telephone}type="textfield" label="telephone #" 
+                                    <TextField size="small" variant="outlined" className="partyinputs" value={this.state.telephone.slice(2,13)} type="textfield" label="telephone #" inputProps={{ maxLength: 10 }}
                                     onChange={(event) => {
                                         this.setState({ telephone: `+1${event.target.value}`})
                                     }}/>
@@ -288,7 +288,7 @@ class EditParty extends React.Component<EditPartyProps, EditPartyState> {
                             </Grid>
                             <Grid container style={{justifyContent: "space-between"}}>
                                 <Grid item sm={6} xs={12} className="partyDisplayBoxLine1">
-                                    <TextField multiline={true} rows={1} size="small" variant="outlined" value={this.state.specialNotes}className="partyinputs"  label="Notes"
+                                    <TextField multiline={true} rows={1} size="small" variant="outlined" value={this.state.specialNotes}className="partyinputs"  label="Notes" inputProps={{ maxLength: 140 }}
                                     onChange={(event) => {
                                         this.setState({ specialNotes: event.target.value})
                                     }}

@@ -30,8 +30,8 @@ class Login extends React.Component<LoginProps, LoginState> {
          };
     }
 
-    handleSubmit = (event : any) => {
-        event.preventDefault();
+    handleSubmit = () => {
+        // event.preventDefault();
         console.log(this.state.email);
         //CREATES RESTAURANT ENTRY
         fetch(`${APIURL}/staff/login`, {

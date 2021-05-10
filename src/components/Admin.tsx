@@ -86,7 +86,7 @@ class Admin extends React.Component<AdminProps, AdminState> {
     }
 
     componentDidMount() {
-        this.fetchStaff();
+        this.fetchRestaurant();
         // this.fetchRestaurant();
     }
 
@@ -97,19 +97,24 @@ class Admin extends React.Component<AdminProps, AdminState> {
     }
 
     fetchRestaurant = () => {
-        let uuid= this.state.staffList[0].uniqueCode
-        fetch(`${APIURL}/restaurant/lookup/${uuid}`, {
+        // let uuid= this.state.staffList[0].uniqueCode
+        this.setState({ loading: true})
+        fetch(`${APIURL}/restaurant/securelookup/`, {
             method: "GET",
             headers: new Headers({
                 "Content-Type": "application/json",
+                Authorization: this.removeNulls(localStorage.getItem('token'))
             }),
         })
             .then((response) => response.json())
-            .then((restaurant) => {
+            .then((restaurantdata) => {
                 // console.log(restaurant)
-                this.setState({ resName: restaurant.restaurantName})
-                this.setState({ resEmail: restaurant.email})
-                console.log(restaurant)
+                this.setState({ loading: false })
+                this.setState({ staffList: restaurantdata.staffs })
+                this.setState({ resName: restaurantdata.restaurantName})
+                this.setState({ resEmail: restaurantdata.email})
+
+                console.log(restaurantdata)
                 // console.log('Got Name');
             })
             .catch((err) => console.log(err));
@@ -161,6 +166,7 @@ class Admin extends React.Component<AdminProps, AdminState> {
             <div style={{backgroundColor: '#FFF3C2', position: 'fixed', top: "0px", left: '0px', minHeight: '100vh', width: '100%', }} ></div>
             <div id="admin">
                 <h2><Typography variant="h2">Manage Staff</Typography></h2>
+                <Typography variant="h3">{this.state.resName}</Typography>
                 {this.state.staffList.map((staff, index) => {
                     return (
                         <div key={index}>
@@ -192,7 +198,7 @@ class Admin extends React.Component<AdminProps, AdminState> {
                         {staff.email !== this.state.resEmail ? 
                         <p> 
                         <Button variant="contained" color="secondary" onClick={() => this.changeEditStatus(staff, index)}>Edit</Button></p>
-                        : <span>To protect your access to Table Tempo the primary restaurant account permissions cannot be changed.</span> }
+                        : <span><i>To protect your access to Table Tempo the primary restaurant account permissions cannot be changed.</i></span> }
                         <hr/>
                         </Typography>
                     </p>}</div>
@@ -207,7 +213,7 @@ class Admin extends React.Component<AdminProps, AdminState> {
                 </Tooltip>
                 
 
-                <Link to={`/staff/${this.state.staffList[0].uniqueCode}`}><span id="staffURL">{`${APIURL}/staff/${this.state.staffList[0].uniqueCode}`}</span></Link></Typography>
+                <Link to={`/staff/${this.state.staffList[0].uniqueCode}`} target="_blank"><span id="staffURL">{`${APIURL}/staff/${this.state.staffList[0].uniqueCode}`}</span></Link></Typography>
             </div>
             </> );
     }

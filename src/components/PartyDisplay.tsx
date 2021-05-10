@@ -166,7 +166,8 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
         party.seated === false ? seated = true : seated = false;
         fetch(`${APIURL}/party/update/${party.id}`, {
             body: JSON.stringify({ party: { 
-                seated: seated
+                seated: seated,
+                timeSeated: new dayjs()
              } }),
             method: "PUT",
             headers: new Headers({
@@ -198,7 +199,9 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
         party.leftUnseated === false ? left = true : left = false;
         fetch(`${APIURL}/party/update/${party.id}`, {
             body: JSON.stringify({ party: { 
-                leftUnseated: left
+                leftUnseated: left,
+                seated: true,
+                timeSeated: new dayjs()
              } }),
             method: "PUT",
             headers: new Headers({
@@ -217,7 +220,7 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
     //Just makes the phone number pretty. It is formated for Twilio in db but that doesn't look good for humans.
     formatPhoneNumber = (phoneNumberString: string) => {
         phoneNumberString = phoneNumberString.trim();
-        let newNumber: string = phoneNumberString.slice(2,5)+ '-' +phoneNumberString.slice(6,9)+'-'+phoneNumberString.slice(7,11)
+        let newNumber: string = phoneNumberString.slice(2,5)+ '-' +phoneNumberString.slice(5,8)+'-'+phoneNumberString.slice(8,12)
         return newNumber;
     }
 
@@ -240,13 +243,13 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
             .catch((err) => console.log(err));
     }
 
-    changeValue = (event: any) => {
-        this.setState({ name: event.target.value})
-    }
+    // changeValue = (event: any) => {
+    //     this.setState({ name: event.target.value})
+    // }
 
     render() { 
         console.log("props",this.props.parties);
-        // console.log("state",this.state.parties);
+        console.log("state",this.state.parties);
         let time = dayjs();
         return ( 
             <div style={{ paddingBottom: "30px"}}>
@@ -299,7 +302,7 @@ class PartyDisplay extends React.Component<PartyDisplayProps, PartyDisplayState>
                                     <ExpandMoreIcon color={party.seated  || party.leftUnseated ? "inherit" :  dayjs(party.timeEstimated, 'h:mm a') <= time ? "secondary" : "primary"} fontSize="large" className={party.isExpanded? "lineUpBtn regularArrowBtn" : "lineUpBtn rotateArrowBtn"} 
                                     onClick={() => this.changeExpandStatus(party, index)}/></span>
 
-                                    <Button variant="contained"   id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
+                                    <Button variant="contained"  className="lineUpBtn" id={party.seated === true || party.leftUnseated === true ? "seatedBtn" : "orangeBtn"} onClick={() =>{
                                         this.seatedUpdate(party)}}>
                                         {party.seated === false ? "Seat" : "Sat"}
                                     </Button>

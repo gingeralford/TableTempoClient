@@ -53,11 +53,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
          };
     }
 
-    // componentDidUpdate(prevProps: any[], prevState: any) {
-    //     if(prevState.parties !== this.state.parties){
-    //         console.log("component did update")
-    //     }
-    // }
+
     removeNulls =(obj: any) => {
         if (obj === null) {
             return undefined;

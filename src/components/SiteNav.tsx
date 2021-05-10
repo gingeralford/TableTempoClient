@@ -10,7 +10,6 @@ import {Link} from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-// import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -88,7 +87,15 @@ function LeftDrawer(props:ILeftDrawer) {
           classes={classes}
           >
           <div id="drawerInside">
-
+          <Link to='/' className="sidebarLinks">
+            <List>
+              <ListItem button key='Waitlist'>
+                <ListItemIcon><LineStyleIcon color="primary"/>
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="body2">Waitlist</Typography>} />
+              </ListItem>
+            </List>
+          </Link>
           {/* Only shows link to /admin if admin=true */}
           {localStorage.getItem('admin') === "true" ? 
           <Link to='/admin' className="sidebarLinks" >
@@ -103,23 +110,15 @@ function LeftDrawer(props:ILeftDrawer) {
           : "" }
           
           <Link to='/reports' className="sidebarLinks">
-          <List>
-            <ListItem button key='Reports'>
-              <ListItemIcon><AssessmentIcon color="primary"/>
-              </ListItemIcon>
-              <ListItemText primary={<Typography variant="body2">Reports</Typography>} />
-            </ListItem>
+            <List>
+              <ListItem button key='Reports'>
+                <ListItemIcon><AssessmentIcon color="primary"/>
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="body2">Reports</Typography>} />
+              </ListItem>
             </List>
           </Link>
-          <Link to='/' className="sidebarLinks">
-          <List>
-            <ListItem button key='Dashboard'>
-              <ListItemIcon><LineStyleIcon color="primary"/>
-              </ListItemIcon>
-              <ListItemText primary={<Typography variant="body2">Dashboard</Typography>} />
-            </ListItem>
-            </List>
-            </Link>
+          
             <Divider />
             <List>
             <ListItem key='Copyright'>
@@ -142,7 +141,6 @@ interface IButtonAppBar {
   token: string | null
 }
 
-//TODO: Was using any...can take this out if everything keeps working
 function ButtonAppBar(props: IButtonAppBar) {
   const classes = useStyles();
 

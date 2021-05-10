@@ -26,7 +26,7 @@ html, body {
 #ipadImg {
   max-width: 100%;
   width: 600px;
-  min-width: 320px;
+  min-width: 250px;
   object-fit:fill;
 }
 
@@ -263,6 +263,54 @@ html, body {
   color:#007CBE;
 }
 
+#reportTable {
+  background-color: white;
+  border: 1px dashed #707070;
+  padding: 10px;
+  /* overflow-x: scroll; */
+}
+
+#reportTable thead {
+  color: #007CBE;
+}
+
+#reportTable td, #reportTable th {
+  padding: 4px 12px 4px 12px;
+  border-bottom: 1px dashed #d3d3d3;
+}
+
+.unseatedParty {
+  color: #9a423b;
+}
+
+.daypick {
+  margin: 10px 0px;
+  /* padding: 5px; */
+}
+.daypickInput {
+  box-sizing: border-box;
+  padding: 5px;
+  border: 1px solid #707070;
+  border-radius: 4px;
+  width: 150px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  color: #707070;
+}
+.fullBtn {
+  width: 150px;
+}
+
+#tableOverflow {
+  overflow-x: scroll;
+  -ms-overflow-style: none;  
+  scrollbar-width: none;
+}
+#tableOverflow::-webkit-scrollbar { 
+  display: none;  
+}
+
+
 @media only screen and (max-width: 700px) {
   .partyDisplayBoxLine1 {
     font-size: 1rem;
@@ -276,5 +324,18 @@ html, body {
   }
   #appName {
     font-size: 1.8rem;
+  }
+  .salesText {
+    border-radius: 0px;
+  }
+  #wideBtn {
+    border-radius: 0px;
+  }
+
+}
+
+@media only screen and (min-width: 960px) {
+  #landingImgGrid {
+    padding-right: 40px;
   }
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
+import Grid, { GridSpacing } from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import handIpad from '../assets/handIpadsm.png';
@@ -35,11 +35,9 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
          };
     }
 
-    //THIS ALL WORKS BUT IT'S VERY SLOW 
-    //TODO: Figure out parameter typing - don't use ANY
     // Thought it was FormEvent<HTMLInputElement>
-    handleSubmit = (event : any) => {
-        event.preventDefault();
+    handleSubmit = () => {
+        // event.preventDefault();
         console.log(this.state.restaurantName, this.state.email);
         //CREATES RESTAURANT ENTRY
         fetch(`${APIURL}/restaurant/create`, {
@@ -92,10 +90,10 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
             <>
             <div style={{backgroundColor: '#FFD639', position: 'fixed', top: "0px", left: '0px', minHeight: '100vh', width: '100%', }} ></div>
                 <Typography variant="body1" component={'span'}>
-                <Grid container   id="landingGrid">
-                <Grid item md={1} xs={12}></Grid>
-                    <Grid item md={6} xs={12} >
-                    <img src={handIpad} alt="hand holding an ipad with Table Tempo software" id="ipadImg"/>
+                <Grid container id="landingGrid" >
+                <Grid item md={1} xs={12} ></Grid>
+                    <Grid item md={6} xs={12} id="landingImgGrid">
+                    <img src={handIpad} alt="hand holding an ipad with Table Tempo software" id="ipadImg" />
                     </Grid>
                     <Grid item md={4}xs={12} >
                         <Box >
@@ -110,13 +108,13 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
                         <Box  mx="auto" padding="0" maxWidth="440px">
                             <Box>
                             <form className="">
-                            <TextField className="signUpFields" required variant="filled"  label="Restaurant Name" onChange={(event) => {
+                            <TextField className="signUpFields" required variant="filled"  label="Restaurant Name" inputProps={{ maxLength: 254 }}onChange={(event) => {
                                     this.setState({ restaurantName: event.target.value})
                                 }} /><br/>
-                            <TextField className="signUpFields" required variant="filled"  label="Email Address" onChange={(event) => {
+                            <TextField className="signUpFields" required variant="filled"  label="Email Address" inputProps={{ maxLength: 254 }}onChange={(event) => {
                                     this.setState({ email: event.target.value})
                                 }} /><br/>
-                            <TextField className="signUpFields" required variant="filled" label="Password" type="password" onChange={(event) => {
+                            <TextField className="signUpFields" required variant="filled" label="Password" type="password" inputProps={{ maxLength: 100 }}onChange={(event) => {
                                     this.setState({ password: event.target.value})
                                 }} /><br/>
                             <Button variant="contained"  fullWidth={true} color="secondary" id="wideBtn" onClick={this.handleSubmit}>Sign Up Now</Button><br/>
@@ -124,7 +122,7 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item md={1} xs={12}></Grid>
+                    <Grid item md={1} xs={12} ></Grid>
                 </Grid>
                 </Typography>
             

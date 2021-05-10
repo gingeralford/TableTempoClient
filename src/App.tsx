@@ -39,8 +39,14 @@ const customTheme = createMuiTheme({
     },
     h2: {
       fontFamily: 'Abril Fatface',
-      fontSize: '1.2em',
+      fontSize: '1.3em',
       color: '#007CBE'
+    },
+    h3: {
+      fontFamily: 'Abril Fatface',
+      fontSize: '1.2em',
+      color: '#007CBE',
+      // textDecoration: "underline"
     },
     body1: { 
       fontFamily: 'Raleway, Arial',
