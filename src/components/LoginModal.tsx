@@ -32,8 +32,8 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
     }
 
     //add event to parameters if event needed.
-    handleSubmit = () => {
-        // event.preventDefault();
+    handleSubmit = (event: any) => {
+        event.preventDefault();
         console.log(this.state.email);
         fetch(`${APIURL}/staff/login`, {
             method: "POST",
@@ -68,7 +68,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
 
   body: JSX.Element = (
     <div  className="loginModal">
-      <form className="signUpForm">
+      <form className="signUpForm" >
         <TextField className="signUpFields" required variant="filled"  label="Email Address" inputProps={{ maxLength: 254 }}onChange={(event) => {
                 this.setState({ email: event.target.value})
             }} /><br/>

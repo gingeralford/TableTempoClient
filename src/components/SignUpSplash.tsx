@@ -36,8 +36,8 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
     }
 
     // Thought it was FormEvent<HTMLInputElement>
-    handleSubmit = () => {
-        // event.preventDefault();
+    handleSubmit = (event: any) => {
+        event.preventDefault();
         console.log(this.state.restaurantName, this.state.email);
         //CREATES RESTAURANT ENTRY
         fetch(`${APIURL}/restaurant/create`, {
@@ -107,7 +107,7 @@ class SignUpSplash extends React.Component<SignUpSplashProps, SignUpSplashState>
                         </Box>    
                         <Box  mx="auto" padding="0" maxWidth="440px">
                             <Box>
-                            <form className="">
+                            <form className="" >
                             <TextField className="signUpFields" required variant="filled"  label="Restaurant Name" inputProps={{ maxLength: 254 }}onChange={(event) => {
                                     this.setState({ restaurantName: event.target.value})
                                 }} /><br/>

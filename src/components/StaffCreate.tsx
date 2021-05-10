@@ -71,8 +71,8 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
     }
     
 
-    handleSubmit = () => {
-        // event.preventDefault();
+    handleSubmit = (event: any) => {
+        event.preventDefault();
         const uuid = this.props.match.params.uuid;
         console.log(this.state.email);
         //CREATES STAFF
@@ -123,7 +123,7 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
                         </Box>    
                         <Box  mx="auto" padding="0" maxWidth="440px">
                             <Box>
-                            <form className="signUpForm">
+                            <form className="signUpForm" >
                                 <TextField className="signUpFields" required variant="filled"  label="Email Address" onChange={(event) => {
                                         this.setState({ email: event.target.value})
                                     }} /><br/>
@@ -140,7 +140,7 @@ class StaffCreate extends React.Component<PropsType, StaffCreateState> {
                                 }}
                                 /><br/> */}
                                 <Button variant="contained"  fullWidth={true} color="secondary" id="wideBtn" onClick={this.handleSubmit}>Sign Up</Button><br/>
-                            </form>
+                            </form >
                             {/* TODO: Error Handling can go below */}
                             <Typography variant="body2"></Typography>
                             </Box>

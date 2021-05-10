@@ -33,6 +33,7 @@ export interface PartyCreateProps {
 }
  
 export interface PartyCreateState {
+    loading: boolean,
     name: string,
     partyNum: number,
     telephone: string,
@@ -67,8 +68,9 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
     constructor(props: PartyCreateProps) {
         super(props);
         this.state = { 
+            loading: false,
             name: "",
-            partyNum: 0,
+            partyNum: 1,
             telephone: "",
             over21: false,
             timeEstimated: dayjs(new Date()),
@@ -95,26 +97,23 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
         return obj;
     }
 
-    // clearForm = () => {
-    //     this.setState({
-    //         name: "",
-    //         partyNum: 0,
-    //         telephone: "",
-    //         over21: false,
-    //         timeEstimated: dayjs(new Date()),
-    //         timeSeated: dayjs(new Date()),
-    //         seated: false,
-    //         leftUnseated: false,
-    //         specialNotes: "",
-    //         staffId: 0,
-    //         restaurantId: 0,
-    //         uniqueCode: ""
-    //     })
-    // }
+    // clearForm = () => { 
+    //     let formToClear:HTMLFormElement;
+    //     formToClear = <HTMLFormElement>document.getElementById("clearableForm")
+    //     if (formToClear === null) {
+    //         alert('oops');
+    //       } else {
+    //         // since you've done the nullable check
+    //         // TS won't complain from this point on
+    //         formToClear.reset() // <- no error
+    //       }
+    //   }
+
 
     handleSubmit = (event: any) => {
         
-        event.preventDefault();
+        // event.preventDefault();
+        this.setState({loading: true})
         //CREATES RESTAURANT ENTRY
         fetch(`${APIURL}/party/create`, {
             method: "POST",
@@ -138,33 +137,44 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
             .then((data) => {
                 console.log(data);
                 console.log('Party Created!');
+                this.setState({loading: false})
                 this.props.fetchParties();
+                this.setState({
+                    name: "", 
+                    partyNum: 1,
+                    telephone: "",
+                    over21: false,
+                    timeEstimated: dayjs(),
+                    timeSeated: dayjs(),
+                    specialNotes: ""})
                 // this.clearForm();
             })
             .catch((err) => console.log(err));
         }
 
 
+
     render() { 
         return ( 
             <div >
                 <div className="partyDisplayBox">
-                <form className="partyCreate" onSubmit={this.handleSubmit}>
+                <form className="partyCreate"  id="clearableForm">
                 <Grid container style={{justifyContent: "space-between" }}>
                 <Grid item sm={2} xs={6} className="partyDisplayBoxLine1" >
-                    <TextField margin="none" size="small" variant="outlined" className="partyinputs" type="number" inputProps={{ maxLength: 2}}label="# Guests"
+                    <TextField margin="none" size="small" variant="outlined" className="partyinputs" type="number" inputProps={{ maxLength: 2, min: 1}}label="# Guests" 
                     onChange={(event) => {
                         this.setState({ partyNum: parseInt(event.target.value)})
                     }}/>
                 </Grid>
                 <Grid item sm={3} xs={6} className="partyDisplayBoxLine1">
-                    <TextField margin="none" variant="outlined" className="partyinputs" label="Party Name" type="textfield" size="small" inputProps={{ maxLength: 40 }}
+                    <TextField margin="none" variant="outlined" className="partyinputs" label="Party Name" type="textfield" size="small" inputProps={{ maxLength: 40 }} 
                     onChange={(event) => {
                         this.setState({ name: event.target.value})
                     }} /><br/>
                 </Grid>
                 <Grid item sm={3} xs={12} className="partyDisplayBoxLine1">
                     <TextField size="small" variant="outlined" className="partyinputs" inputProps={{ maxLength: 10 }} type="textfield" label="telephone #" 
+                
                     onChange={(event) => {
                         this.setState({ telephone: `+1${event.target.value}`})
                     }}/>
@@ -181,31 +191,19 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                     />
                 </FormGroup>
                 </FormControl>
-                    {/* <label>Over 21?
-                    <input className="partyinputs" type="checkbox" placeholder="over 21?"
-                    onChange={(event) => {
-                        this.setState({ over21: event.target.checked})
-                    }}
-                    /></label> */}
+
                 </Grid>
                 <Grid item sm={2} xs={6} className="partyDisplayBoxLine1">
-                    <TextField style={{ width: "100%"}}size="small" variant="outlined" className="partyinputs" type="number" label="Est. Mins." inputProps={{ maxLength: 3 }}
+                    <TextField style={{ width: "100%"}}size="small" variant="outlined" className="partyinputs" type="number" label="Est. Mins." inputProps={{ maxLength: 3, min: 0 }} 
                     onChange={(event) => {
                         this.setState({ timeEstimated: dayjs().add(event.target.value, 'minute')})
-                    }}
-                
-                    // /></label><br/>
-                    // <label>Time Seated?
-                    // <input className="signUpFields" type="datetime-local" placeholder="Time Seated"
-                    // onChange={(event) => {
-                    //     this.setState({ timeSeated: new Date(event.target.value)})
-                    // }}
-                    />
+                    }}/>
                 </Grid>
                 </Grid>
                 <Grid container  style={{justifyContent: "space-between"}}>
                     <Grid item md={8} sm={7} xs={12} style={{ flexShrink: 3}}className="partyDisplayBoxLine1">
                     <TextField multiline={true} rows={1} size="small" variant="outlined"  className="partyinputs"  label="Notes" inputProps={{ maxLength: 140 }}
+                    
                     onChange={(event) => {
                         this.setState({ specialNotes: event.target.value})
                     }}
@@ -214,72 +212,15 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                     </Grid>
                     <Grid item md={1} sm={2}  xs={3} className="partyDisplayBoxLine1" style={{ textAlign: "right"}}>
                     
-                    <Button variant="contained" className="lineUpBtn" fullWidth={false} color="secondary" id="orangeBtn" type="submit" >Save</Button>
+                    <Button variant="contained" className="lineUpBtn" fullWidth={false} color="secondary" id="orangeBtn" type="submit" onClick={this.handleSubmit}
+                    >Save</Button>
                     </Grid>
                 </Grid>
                 </form>
                 
                 </div>
             </div>
-            // <div >
-            //     <div className="partyDisplayBox">
-            //     <Grid container >
-            //     <Grid item md={1}></Grid>
-            //     <Grid item md={10}>
-            //     <form className="partyCreate" onSubmit={this.handleSubmit}>
-            //         {/* <TextField className="signUpFields" required variant="filled"  label="Email Address" onChange={(event) => {
-            //                 this.setState({ email: event.target.value})
-            //             }} /><br/>
-            //         <TextField className="signUpFields" required variant="filled" label="Password" type="password" onChange={(event) => {
-            //             this.setState({ password: event.target.value})
-            //         }} /><br/> */}
-            //         <TextField variant="outlined" className="partyinputs" label="Party Name" type="textfield" size="small" 
-            //         onChange={(event) => {
-            //             this.setState({ name: event.target.value})
-            //         }} /><br/>
-            //         {/* <input className="signUpFields" type="textfield" placeholder="Party Name" 
-            //         onChange={(event) => {
-            //             this.setState({ name: event.target.value})
-            //         }} /><br/> */}
-            //         <input className="partyinputs" type="number" placeholder="Number of Guests"
-            //         onChange={(event) => {
-            //             this.setState({ partyNum: parseInt(event.target.value)})
-            //         }}
-            //         /><br/>
-            //         <input className="partyinputs" type="textfield" placeholder="telephone #" 
-            //         onChange={(event) => {
-            //             this.setState({ telephone: `+1${event.target.value}`})
-            //         }}
-            //         /><br/><label>Over 21?
-            //         <input className="partyinputs" type="checkbox" placeholder="over 21?"
-            //         onChange={(event) => {
-            //             this.setState({ over21: event.target.checked})
-            //         }}
-            //         /></label><br/>
-            //         <label>Estimated Time?<br/>
-            //         <input className="partyinputs" type="number" placeholder="Estimated Mins til Seated"
-            //         onChange={(event) => {
-            //             this.setState({ timeEstimated: dayjs().add(event.target.value, 'minute')})
-            //         }}
-            //         // /></label><br/>
-            //         // <label>Time Seated?
-            //         // <input className="signUpFields" type="datetime-local" placeholder="Time Seated"
-            //         // onChange={(event) => {
-            //         //     this.setState({ timeSeated: new Date(event.target.value)})
-            //         // }}
-            //         /></label><br/>
-            //         <textarea className="partyinputs"  placeholder="Special Notes"
-            //         onChange={(event) => {
-            //             this.setState({ specialNotes: event.target.value})
-            //         }}
-            //         /><br/>
-            //         <Button variant="contained"  fullWidth={false} color="secondary" id="seatedBtn" type="submit" >Done</Button><br/>
-            //                 </form>
-            //     </Grid>
-            //     <Grid item md={1}></Grid>
-            //     </Grid>
-            //     </div>
-            // </div>
+
          );
     }
 }

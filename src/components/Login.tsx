@@ -30,8 +30,8 @@ class Login extends React.Component<LoginProps, LoginState> {
          };
     }
 
-    handleSubmit = () => {
-        // event.preventDefault();
+    handleSubmit = (event: any) => {
+        event.preventDefault();
         console.log(this.state.email);
         //CREATES RESTAURANT ENTRY
         fetch(`${APIURL}/staff/login`, {
@@ -74,7 +74,7 @@ class Login extends React.Component<LoginProps, LoginState> {
                         </Box>    
                         <Box  mx="auto" padding="0" maxWidth="440px">
                             <Box>
-                            <form className="signUpForm">
+                            <form className="signUpForm" >
                                 <TextField className="signUpFields" required variant="filled"  label="Email Address" onChange={(event) => {
                                         this.setState({ email: event.target.value})
                                     }} /><br/>
