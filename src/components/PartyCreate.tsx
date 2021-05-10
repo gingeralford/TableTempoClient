@@ -112,7 +112,7 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
 
     handleSubmit = (event: any) => {
         
-        // event.preventDefault();
+        event.preventDefault();
         this.setState({loading: true})
         //CREATES RESTAURANT ENTRY
         fetch(`${APIURL}/party/create`, {
@@ -138,7 +138,7 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                 console.log(data);
                 console.log('Party Created!');
                 this.setState({loading: false})
-                this.props.fetchParties();
+                
                 this.setState({
                     name: "", 
                     partyNum: 1,
@@ -147,6 +147,7 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                     timeEstimated: dayjs(),
                     timeSeated: dayjs(),
                     specialNotes: ""})
+                this.props.fetchParties();
                 // this.clearForm();
             })
             .catch((err) => console.log(err));
@@ -158,23 +159,23 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
         return ( 
             <div >
                 <div className="partyDisplayBox">
-                <form className="partyCreate"  id="clearableForm">
+                <form className="partyCreate"  id="clearableForm" onSubmit={this.handleSubmit}>
                 <Grid container style={{justifyContent: "space-between" }}>
                 <Grid item sm={2} xs={6} className="partyDisplayBoxLine1" >
-                    <TextField margin="none" size="small" variant="outlined" className="partyinputs" type="number" inputProps={{ maxLength: 2, min: 1}}label="# Guests" 
+                    <TextField margin="none" size="small" variant="outlined" className="partyinputs" type="number" inputProps={{ maxLength: 2, min: 1}}label="# Guests" value={this.state.partyNum}
                     onChange={(event) => {
                         this.setState({ partyNum: parseInt(event.target.value)})
                     }}/>
                 </Grid>
                 <Grid item sm={3} xs={6} className="partyDisplayBoxLine1">
-                    <TextField margin="none" variant="outlined" className="partyinputs" label="Party Name" type="textfield" size="small" inputProps={{ maxLength: 40 }} 
+                    <TextField margin="none" variant="outlined" className="partyinputs" label="Party Name" type="textfield" size="small" inputProps={{ maxLength: 40 }} value={this.state.name}
                     onChange={(event) => {
                         this.setState({ name: event.target.value})
                     }} /><br/>
                 </Grid>
                 <Grid item sm={3} xs={12} className="partyDisplayBoxLine1">
                     <TextField size="small" variant="outlined" className="partyinputs" inputProps={{ maxLength: 10 }} type="textfield" label="telephone #" 
-                
+                    value={(this.state.telephone.slice(2,13))}
                     onChange={(event) => {
                         this.setState({ telephone: `+1${event.target.value}`})
                     }}/>
@@ -203,7 +204,7 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                 <Grid container  style={{justifyContent: "space-between"}}>
                     <Grid item md={8} sm={7} xs={12} style={{ flexShrink: 3}}className="partyDisplayBoxLine1">
                     <TextField multiline={true} rows={1} size="small" variant="outlined"  className="partyinputs"  label="Notes" inputProps={{ maxLength: 140 }}
-                    
+                    value={this.state.specialNotes}
                     onChange={(event) => {
                         this.setState({ specialNotes: event.target.value})
                     }}
@@ -212,7 +213,7 @@ class PartyCreate extends React.Component<PartyCreateProps, PartyCreateState> {
                     </Grid>
                     <Grid item md={1} sm={2}  xs={3} className="partyDisplayBoxLine1" style={{ textAlign: "right"}}>
                     
-                    <Button variant="contained" className="lineUpBtn" fullWidth={false} color="secondary" id="orangeBtn" type="submit" onClick={this.handleSubmit}
+                    <Button variant="contained" className="lineUpBtn" fullWidth={false} color="secondary" id="orangeBtn" type="submit" 
                     >Save</Button>
                     </Grid>
                 </Grid>

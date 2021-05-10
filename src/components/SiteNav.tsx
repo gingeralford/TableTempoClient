@@ -18,6 +18,7 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import LineStyleIcon from '@material-ui/icons/LineStyle';
 import CopyrightIcon from '@material-ui/icons/Copyright';
+import Favicon from '../assets/android-chrome-512x512.png';
 
 export interface SiteNavProps {
   updateToken: Function,
@@ -150,17 +151,17 @@ function ButtonAppBar(props: IButtonAppBar) {
         <Toolbar className="toolbarItems">
 
           {props.token == localStorage.getItem('token') ? 
-          <div style={{ width: "70px"}}>
+          <div style={{ width: "60px"}}>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => {props.toggleDrawerStatus()}}>
             
             <MenuIcon />
             {/* Has to be direct call, not fat arrow function */}
             
           </IconButton></div>
-          : <div style={{ width: "70px"}}></div>}
+          : <div style={{ width: "60px"}}></div>}
           <div>
           <Link to="/" style={{textDecoration: "none"}}><Typography variant="h1" id="appName">
-            Table Tempo
+          <img src={Favicon} height="25px" alt="hourglass icon"/>Table Tempo
           </Typography></Link></div>
           {props.token != localStorage.getItem('token') ? 
           <LoginModal 

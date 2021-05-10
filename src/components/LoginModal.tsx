@@ -16,7 +16,8 @@ export interface LoginModalState {
     email: string,
     password: string,
     token: string | null,
-    open: boolean
+    open: boolean,
+    errorMsg: string
 }
 
 
@@ -27,7 +28,8 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
             token: props.token,
             email: "",
             password: "",
-            open: false
+            open: false,
+            errorMsg: "hi"
           };
     }
 
@@ -53,7 +55,11 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                 localStorage.setItem('admin', data.staff.admin);
                 console.log('Logged In!');
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err)
+                this.setState({ errorMsg: "Email and Password combination not found"})
+            });
+
         }
 
 
@@ -77,7 +83,10 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
         }} /><br/>
         <Button variant="contained"  fullWidth={true} color="secondary" id="wideBtn" onClick={this.handleSubmit}>Log In</Button><br/>
       </form>
-      <Typography variant="body2">Don't have an account? You'll need to notify your Restaurant manager to send you a custom link to Sign up!</Typography>
+      {/* <span>{this.state.errorMsg}</span> */}
+      <Typography variant="body2">
+          Don't have an account? You'll need to notify your Restaurant manager to send you a custom link to Sign up!</Typography>
+          
     </div>
   );
 
@@ -94,7 +103,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                 aria-labelledby=""
                 aria-describedby="loginModal signUpForm"
                 disableBackdropClick={false}
-            >
+            >  
                 {this.body}
             </Modal>
             </div>
