@@ -29,7 +29,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
             email: "",
             password: "",
             open: false,
-            errorMsg: "hi"
+            errorMsg: ""
           };
     }
 
@@ -50,14 +50,21 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
+                if (data.error === "No staff member found"){
+                    this.setState({ errorMsg: "* No staff account found with that email"})
+                } else if (data.error === "Failed Login"){
+                    this.setState({ errorMsg: "* Incorrect email/password combination"})
+                } else { 
                 this.props.updateToken(data.sessionToken);
                 console.log("admin status", data.staff.admin);
                 localStorage.setItem('admin', data.staff.admin);
                 console.log('Logged In!');
+                }
             })
             .catch((err) => {
                 console.log(err)
-                this.setState({ errorMsg: "Email and Password combination not found"})
+                // this.setState({ errorMsg: "Email and Password combination not found"})
+                // alert("Email and Password combination not found")
             });
 
         }
@@ -72,7 +79,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
   };
 
 
-  body: JSX.Element = (
+  body: Function = () => { return(
     <div  className="loginModal">
       <form className="signUpForm" >
         <TextField className="signUpFields" required variant="filled"  label="Email Address" inputProps={{ maxLength: 254 }}onChange={(event) => {
@@ -83,12 +90,12 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
         }} /><br/>
         <Button variant="contained"  fullWidth={true} color="secondary" id="wideBtn" onClick={this.handleSubmit}>Log In</Button><br/>
       </form>
-      {/* <span>{this.state.errorMsg}</span> */}
+      <Typography variant="h3">{this.state.errorMsg}</Typography>
       <Typography variant="body2">
           Don't have an account? You'll need to notify your Restaurant manager to send you a custom link to Sign up!</Typography>
           
     </div>
-  );
+  )};
 
     //Actual button exported to SiteBar is HERE
     render(){
@@ -104,7 +111,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                 aria-describedby="loginModal signUpForm"
                 disableBackdropClick={false}
             >  
-                {this.body}
+                {this.body()}
             </Modal>
             </div>
         );

@@ -108,7 +108,6 @@ class Admin extends React.Component<AdminProps, AdminState> {
         })
             .then((response) => response.json())
             .then((restaurantdata) => {
-                // console.log(restaurant)
                 this.setState({ loading: false })
                 this.setState({ staffList: restaurantdata.staffs })
                 this.setState({ resName: restaurantdata.restaurantName})
@@ -205,7 +204,7 @@ class Admin extends React.Component<AdminProps, AdminState> {
                     )
                 })}
                 <h2><Typography variant="h2">Add New Staff</Typography></h2>
-                <Typography variant="body2"><p>Send your employees the following link to create their account and password. The link is custom to your account and will automatically link them to this restaurant.</p>
+                <Typography variant="body2"><p>Send your employees the following link to create their account and password. The link is custom to your account and will automatically connect their accounts to this restaurant.</p>
                 <Tooltip title="copy to clipboard">
                     <IconButton aria-label="copy to clipboard">
                         <FileCopyIcon color="secondary" onClick={() =>  navigator.clipboard.writeText(`${APIURL}/staff/${this.state.staffList[0].uniqueCode}`)}/>
